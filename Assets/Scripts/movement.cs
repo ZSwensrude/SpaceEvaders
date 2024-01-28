@@ -13,20 +13,20 @@ public class movement : MonoBehaviour
     {
         Vector3 transVec = new Vector3(0, 0, 0);
         
-        if (Input.GetKeyDown("left")) {
+        if (Input.GetKeyDown("left") || Input.GetKeyDown("a")) {
 
             transVec[0] = -moveDistance;
         }
 
-        if (Input.GetKeyDown("right")) {
+        if (Input.GetKeyDown("right") || Input.GetKeyDown("d")) {
             transVec[0] = moveDistance;
         }
 
-        if (Input.GetKeyDown("up")) {
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) {
             transVec[1] = moveDistance;
         }
 
-        if (Input.GetKeyDown("down")) {
+        if (Input.GetKeyDown("down") || Input.GetKeyDown("s")) {
             transVec[1] = -moveDistance;
         }
 
