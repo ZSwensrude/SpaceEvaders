@@ -8,6 +8,6 @@ public class PlayButton : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("Play button pressed");
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
     }
 }
