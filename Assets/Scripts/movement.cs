@@ -3,88 +3,132 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controls player movement
+/// </summary>
 public class Movement : MonoBehaviour
 {
 
-   public float moveDistance = 2;
-   public int gridUnitLength = 2;
-   public int moveSpeed = 25;
+   //For future use ;)
+   private PlayerInput playerInput;
 
-   private int horizontal;
-   private int vertical;
+   //Controls movement distance
+   public float moveDistance = 2f;
+
+   //Controls speed during movement. Used for smoothing
+   //"MoveTowards" function called during update
+   public float moveSpeed = 25f;
+
+   //Public variable that store movement direction for player
+   private Vector3 transVec = new Vector3(0, 0, 0);
+
+   //Keeps track of player's current horizontal position on grid
+   private int horizontal = 0;
+   //Keeps track of player's current vertical position on grid
+   private int vertical = 0;
+
+   
+   /// <summary>
+   /// Moves player up one unit on grid if player is able
+   /// </summary>
+   /// <param name="context">context of button press associated with action</param>
    public void Up(InputAction.CallbackContext context)
    {
-      if (context.started)
+
+      if (context.performed)  
       {
 
          if (vertical < 1)
          {
 
             vertical++;
-            Vector3 transVec = new Vector3 (0, moveDistance, 0);
-            float step = Time.deltaTime * moveSpeed;
-
-            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+            transVec[1] += moveDistance;
          }
 
       }
    
    }
 
+   /// <summary>
+   /// Moves player down one unit on grid if player is able
+   /// </summary>
+   /// <param name="context">context of button press associated with action</param>
    public void Down(InputAction.CallbackContext context) 
    {
-      if (context.started)
+
+      if (context.performed)
       {
 
          if (vertical > -1)
          {
 
             vertical--;
-            Vector3 transVec = new Vector3 (0, -moveDistance, 0);
-            float step = Time.deltaTime * moveSpeed;
+            transVec[1] -= moveDistance;
 
-            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
          }
 
       }
+
+
    }
 
+   /// <summary>
+   /// Moves player left one unit on grid if player is able
+   /// </summary>
+   /// <param name="context">context of button press associated with action</param>
    public void Left(InputAction.CallbackContext context)
    {
-      if (context.started)
+
+      if (context.performed)
       {
 
          if (horizontal > -1)
          {
 
-            horizontal++;
-            Vector3 transVec = new Vector3 (-moveDistance, 0, 0);
-            float step = Time.deltaTime * moveSpeed;
+            horizontal--;
+            transVec[0] -= moveDistance;
 
-            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
          }
 
       }
+
    
    }
 
+   /// <summary>
+   /// Moves player right one unit on grid if player is able
+   /// </summary>
+   /// <param name="context">context of button press associated with action</param>
    public void Right(InputAction.CallbackContext context)
    {
-      if (context.started)
+
+      if (context.performed)
       {
 
          if (horizontal < 1)
          {
 
             horizontal++;
-            Vector3 transVec = new Vector3 (moveDistance, 0, 0);
-            float step = Time.deltaTime * moveSpeed;
+            transVec[0] += moveDistance;
 
-            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
          }
 
       }
+      
+
    
+   }
+   
+   /// <summary>
+   /// Update called every frame. Moves player if movement performed
+   /// </summary>
+   public void Update() 
+   {
+      
+      float step = Time.deltaTime * moveSpeed;
+
+      transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+
    }
 
 }

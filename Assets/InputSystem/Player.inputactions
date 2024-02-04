@@ -1,100 +1,94 @@
 {
-    "name": "PlayerActions",
+    "name": "Player",
     "maps": [
         {
             "name": "Player",
-            "id": "2b0622b5-ca4d-4863-bc47-b2efea1d02ff",
+            "id": "fa88945b-a49e-4c16-add6-25a2511b0d91",
             "actions": [
                 {
-                    "name": "Move Up",
+                    "name": "MoveUp",
                     "type": "Button",
-                    "id": "b744e03b-d28c-4bf9-9240-30e1f13f0df3",
+                    "id": "de56dfcf-8495-451d-98ba-d41c60eaf585",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move Down",
+                    "name": "MoveDown",
                     "type": "Button",
-                    "id": "45343eac-a02e-4a60-9ae9-cbfef19ce635",
+                    "id": "0f0c7fdc-8958-4e8a-a7e9-9488e60b7046",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move Left",
+                    "name": "MoveLeft",
                     "type": "Button",
-                    "id": "d963014e-6139-40af-9095-8fb9f7f35106",
+                    "id": "a4506059-84fa-405d-860c-b266acd9d88a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move Right",
+                    "name": "MoveRight",
                     "type": "Button",
-                    "id": "e04bdb81-e0f7-462f-819c-27c0e0fca264",
+                    "id": "3137e1c3-582d-4668-bea3-614c329403f2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "0d3d4a10-6397-42da-998f-e641361188bf",
+                    "id": "bc4495fd-e6bd-4357-90c2-5ccf4641b6a3",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Move Up",
+                    "groups": "",
+                    "action": "MoveUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e5588194-6ccd-465b-9947-26e403980a1b",
+                    "id": "bec660a3-b706-42cc-ae36-0bacaada0c0f",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Move Down",
+                    "groups": "",
+                    "action": "MoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "e25b8fa3-c9d9-4472-8f5a-e235fa98c6aa",
+                    "id": "2cf98d05-6d4b-471e-9059-a61d99cd2683",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Move Left",
+                    "groups": "",
+                    "action": "MoveLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "fecc0ebc-6a9e-439b-a76b-21c5b933e0cc",
+                    "id": "c3ca059e-fd09-4a87-ade7-407b4f670a44",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Move Right",
+                    "groups": "",
+                    "action": "MoveRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
-            "devices": []
-        }
-    ]
+    "controlSchemes": []
 }
