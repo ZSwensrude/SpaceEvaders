@@ -1,42 +1,90 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class movement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
 
-    public float moveDistance = 2f;
-    public float gridUnitLength = 2f;
+   public float moveDistance = 2;
+   public int gridUnitLength = 2;
+   public int moveSpeed = 25;
 
-    void Update()
-    {
-        Vector3 transVec = new Vector3(0, 0, 0);
-        
-        if (Input.GetKeyDown("left") || Input.GetKeyDown("a")) {
+   private int horizontal;
+   private int vertical;
+   public void Up(InputAction.CallbackContext context)
+   {
+      if (context.started)
+      {
 
-            transVec[0] = -moveDistance;
-        }
+         if (vertical < 1)
+         {
 
-        if (Input.GetKeyDown("right") || Input.GetKeyDown("d")) {
-            transVec[0] = moveDistance;
-        }
+            vertical++;
+            Vector3 transVec = new Vector3 (0, moveDistance, 0);
+            float step = Time.deltaTime * moveSpeed;
 
-        if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) {
-            transVec[1] = moveDistance;
-        }
+            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+         }
 
-        if (Input.GetKeyDown("down") || Input.GetKeyDown("s")) {
-            transVec[1] = -moveDistance;
-        }
+      }
+   
+   }
 
-        Vector3 tempVec = transVec + transform.position;
+   public void Down(InputAction.CallbackContext context) 
+   {
+      if (context.started)
+      {
 
-        if (tempVec.x < gridUnitLength*1.5 && tempVec.x > -gridUnitLength*1.5 && tempVec.y < gridUnitLength*1.5 && tempVec.y > -gridUnitLength*1.5) {
+         if (vertical > -1)
+         {
 
-            transform.Translate(transVec);
-        
-        }
+            vertical--;
+            Vector3 transVec = new Vector3 (0, -moveDistance, 0);
+            float step = Time.deltaTime * moveSpeed;
 
-    }
+            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+         }
+
+      }
+   }
+
+   public void Left(InputAction.CallbackContext context)
+   {
+      if (context.started)
+      {
+
+         if (horizontal > -1)
+         {
+
+            horizontal++;
+            Vector3 transVec = new Vector3 (-moveDistance, 0, 0);
+            float step = Time.deltaTime * moveSpeed;
+
+            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+         }
+
+      }
+   
+   }
+
+   public void Right(InputAction.CallbackContext context)
+   {
+      if (context.started)
+      {
+
+         if (horizontal < 1)
+         {
+
+            horizontal++;
+            Vector3 transVec = new Vector3 (moveDistance, 0, 0);
+            float step = Time.deltaTime * moveSpeed;
+
+            transform.position = Vector3.MoveTowards(transform.position, transVec, step);
+         }
+
+      }
+   
+   }
+
 }
