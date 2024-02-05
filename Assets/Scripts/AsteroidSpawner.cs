@@ -12,8 +12,10 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField]
     private List<GameObject> asteroidPrefabs;
 
+    [SerializeField]
+    private GameSettings gameSettings;
 
-    private List<Asteroid> asteroids = new List<Asteroid>();
+    private float asteroidSpeed;
 
     void Start()
     {
@@ -28,6 +30,10 @@ public class AsteroidSpawner : MonoBehaviour
             Debug.Log("trying to spawn asteroid");
             SpawnAsteroids(numToSpawn);
 
+            asteroidSpeed = gameSettings.AsteroidSpeed;
+
+            gameSettings.AsteroidSpeed = asteroidSpeed + 10f;
+
             yield return new WaitForSeconds(spawnInterval);
         }
     }
@@ -37,8 +43,7 @@ public class AsteroidSpawner : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            Asteroid asteroid = Instantiate(asteroidPrefabs[0], transform.position, Quaternion.identity).GetComponent<Asteroid>();
-            asteroids.Add(asteroid);
+            Instantiate(asteroidPrefabs[0], transform.position, Quaternion.identity).GetComponent<Asteroid>();
         }
     }
 

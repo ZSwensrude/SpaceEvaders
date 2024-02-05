@@ -5,27 +5,32 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    /*
     [SerializeField]
-    private List<GameObject> asteroids;
+    private GameSettings gameSettings;
 
-    [SerializeField]
-    private float speed = 10f;
-    [SerializeField]
-    private float despawnZ = 0f;
+    private float speed;
+    
+    private float despawnZ = -15f;
 
-    private GameObject asteroid;
-    */
+    private Vector3 targetPosition;
+    private float step;
+
 
     private void Awake()
     {
-        SpawnAsteroid();
+        Debug.Log("asteroid spawned!");
+        targetPosition = new Vector3(transform.position.x, transform.position.y, despawnZ);
+        speed = gameSettings.AsteroidSpeed;
+        step = speed * Time.deltaTime;
     }
 
-    private void SpawnAsteroid ()
+    private void FixedUpdate()
     {
-        Debug.Log("asteroid spawned!");
-        //asteroid = Instantiate(asteroids[0], transform.position, Quaternion.identity);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        if (transform.position.z == despawnZ)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
