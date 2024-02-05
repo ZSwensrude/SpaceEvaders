@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
+    [SerializeField] 
+    private float spawnInterval = 10f;
     [SerializeField]
-    private GameObject asteroid1;
-    [SerializeField] 
-    private GameObject asteroid2;
-    [SerializeField] 
-    private GameObject asteroid3;
+    private int numToSpawn = 1;
+
+    [SerializeField]
+    private List<GameObject> asteroidPrefabs;
 
 
-    // Start is called before the first frame update
+    private List<Asteroid> asteroids = new List<Asteroid>();
+
     void Start()
     {
-        
+        Debug.Log("AsteroidSpawner Start");
+        StartCoroutine(SpawnLoop());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpawnLoop ()
     {
-        
+        while (true)
+        {
+            Debug.Log("trying to spawn asteroid");
+            SpawnAsteroids(numToSpawn);
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
     }
+
+
+    private void SpawnAsteroids (int num)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            Asteroid asteroid = Instantiate(asteroidPrefabs[0], transform.position, Quaternion.identity).GetComponent<Asteroid>();
+            asteroids.Add(asteroid);
+        }
+    }
+
+
 }
