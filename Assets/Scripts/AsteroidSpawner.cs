@@ -1,21 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    [SerializeField] 
-    private float spawnInterval = 10f;
-    [SerializeField]
-    private int numToSpawn = 1;
-
-    [SerializeField]
-    private List<GameObject> asteroidPrefabs;
 
     [SerializeField]
     private GameSettings gameSettings;
+    [SerializeField]
+    private List<GameObject> asteroidPrefabs;
 
-    private float asteroidSpeed;
+    // used in script, also used to set default values
+    [SerializeField]
+    private float spawnInterval = 10f;
+    [SerializeField]
+    private int numToSpawn = 1;
+    [SerializeField]
+    private float asteroidSpeed = 10f;
+
+    private void Awake()
+    {
+        // reset all the scriptable object values to default
+        gameSettings.AsteroidSpeed = asteroidSpeed;
+        gameSettings.AsteroidSpawnInterval = spawnInterval;
+        gameSettings.AsteroidsInGroup = numToSpawn;
+    }
 
     void Start()
     {
@@ -27,13 +37,18 @@ public class AsteroidSpawner : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("trying to spawn asteroid");
+            // get values from scriptable object
+            asteroidSpeed = gameSettings.AsteroidSpeed;
+            spawnInterval = gameSettings.AsteroidSpawnInterval;
+            numToSpawn = gameSettings.AsteroidsInGroup;
+    
+            // spawn asteroids
             SpawnAsteroids(numToSpawn);
 
-            asteroidSpeed = gameSettings.AsteroidSpeed;
-
+            // increase speed of next asteroids (proof that we can change the speed while playing)
             gameSettings.AsteroidSpeed = asteroidSpeed + 10f;
 
+            // wait for the interval before running again
             yield return new WaitForSeconds(spawnInterval);
         }
     }
@@ -43,7 +58,7 @@ public class AsteroidSpawner : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            Instantiate(asteroidPrefabs[0], transform.position, Quaternion.identity).GetComponent<Asteroid>();
+            Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], transform.position, Quaternion.identity).GetComponent<Asteroid>();
         }
     }
 

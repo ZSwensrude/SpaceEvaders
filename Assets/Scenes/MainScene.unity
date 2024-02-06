@@ -1447,13 +1447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08860c40d509b7c4c986adba1e48322d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 10
-  numToSpawn: 1
+  gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
   asteroidPrefabs:
   - {fileID: 5047998980140428262, guid: 566469261302ee74a8643ea2c9018927, type: 3}
   - {fileID: 1138399307392819582, guid: feff820cddc3d5b4cb28fc640cd0cdb9, type: 3}
   - {fileID: 2925477949688139712, guid: a8907626c351bc043b905054757625fe, type: 3}
-  gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
+  spawnInterval: 10
+  numToSpawn: 1
+  asteroidSpeed: 10
 --- !u!4 &1010385977
 Transform:
   m_ObjectHideFlags: 0
