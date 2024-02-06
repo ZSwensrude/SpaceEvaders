@@ -122,7 +122,7 @@ public class Movement : MonoBehaviour
    /// <summary>
    /// Update called every frame. Moves player if movement performed
    /// </summary>
-   public void Update() 
+   public void FixedUpdate() 
    {
       
       float step = Time.deltaTime * moveSpeed;
