@@ -58,6 +58,7 @@ public class AsteroidSpawner : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
+            // randomly get position to spawn asteroid 
             Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], transform.position, Quaternion.identity).GetComponent<Asteroid>();
         }
     }
