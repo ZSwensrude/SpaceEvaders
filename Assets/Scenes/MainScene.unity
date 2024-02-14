@@ -1554,6 +1554,8 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
   asteroidPrefabs:
   - {fileID: 5047998980140428262, guid: 566469261302ee74a8643ea2c9018927, type: 3}
+  - {fileID: 1138399307392819582, guid: feff820cddc3d5b4cb28fc640cd0cdb9, type: 3}
+  - {fileID: 2925477949688139712, guid: a8907626c351bc043b905054757625fe, type: 3}
   spawnInterval: 5
   numToSpawn: 1
   asteroidSpeed: 10

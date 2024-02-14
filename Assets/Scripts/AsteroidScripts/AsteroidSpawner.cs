@@ -20,12 +20,17 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField]
     private float asteroidSpeed = 10f;
 
+    private float gridLength;
+
     private void Awake()
     {
         // reset all the scriptable object values to default
         gameSettings.AsteroidSpeed = asteroidSpeed;
         gameSettings.AsteroidSpawnInterval = spawnInterval;
         gameSettings.AsteroidsInGroup = numToSpawn;
+        
+        // get gridLength from game settings
+        gridLength = gameSettings.GridLength;
     }
 
     void Start()
@@ -93,14 +98,15 @@ public class AsteroidSpawner : MonoBehaviour
 
         for (int i = 1; i < locations.Length + 1; i++)
         {
-            spawnPosition = new Vector3((transform.position.x - x), (transform.position.y - y), (transform.position.z));
+            spawnPosition = new Vector3((transform.position.x - (x * gridLength )), (transform.position.y - (y * gridLength)), (transform.position.z));
 
             Debug.Log("spawnPosition: " + spawnPosition.ToString());
 
+            // if the 
             if (locations[i-1] == 1)
             {
                 // randomly get position to spawn asteroid 
-                Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], spawnPosition, Quaternion.identity).GetComponent<Asteroid>();
+                Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
             }
             
             x++;
