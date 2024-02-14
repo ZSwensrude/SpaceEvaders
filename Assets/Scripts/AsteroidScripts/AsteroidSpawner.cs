@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
 {
+    private bool printLogs;
 
     [SerializeField]
     private GameSettings gameSettings;
@@ -14,16 +15,18 @@ public class AsteroidSpawner : MonoBehaviour
 
     // used in script, also used to set default values
     [SerializeField]
-    private float spawnInterval = 10f;
+    private float spawnInterval;
     [SerializeField]
-    private int numToSpawn = 1;
+    private int numToSpawn;
     [SerializeField]
-    private float asteroidSpeed = 10f;
+    private float asteroidSpeed;
 
     private float gridLength;
 
     private void Awake()
     {
+        printLogs = gameSettings.PrintLogs;
+
         // reset all the scriptable object values to default
         gameSettings.AsteroidSpeed = asteroidSpeed;
         gameSettings.AsteroidSpawnInterval = spawnInterval;
@@ -68,15 +71,18 @@ public class AsteroidSpawner : MonoBehaviour
             spawnInterval = gameSettings.AsteroidSpawnInterval;
             numToSpawn = gameSettings.AsteroidsInGroup;
     
-
-            int[] locations = GetAsteroids(5);
-            String log = "Random asteroids list: [";
-            foreach (var item in locations)
+            int[] locations = GetAsteroids(numToSpawn);
+            
+            if (printLogs)
             {
-                log = log + item.ToString() + " ";
+                String log = "Random asteroids list: [";
+                foreach (var item in locations)
+                {
+                    log = log + item.ToString() + " ";
+                }
+                log = log + "]";
+                Debug.Log(log);
             }
-            log = log + "]";
-            Debug.Log(log);
 
             // spawn asteroids
             SpawnAsteroids(locations);
@@ -100,7 +106,8 @@ public class AsteroidSpawner : MonoBehaviour
         {
             spawnPosition = new Vector3((transform.position.x - (x * gridLength )), (transform.position.y - (y * gridLength)), (transform.position.z));
 
-            Debug.Log("spawnPosition: " + spawnPosition.ToString());
+            if (printLogs)
+                Debug.Log("spawnPosition: " + spawnPosition.ToString());
 
             // if the 
             if (locations[i-1] == 1)

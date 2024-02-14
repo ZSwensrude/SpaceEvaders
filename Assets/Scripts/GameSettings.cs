@@ -6,6 +6,9 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [SerializeField]
+    private bool printLogs;
+
+    [SerializeField]
     private float asteroidSpeed;
 
     [SerializeField]
@@ -23,6 +26,7 @@ public class GameSettings : ScriptableObject
     [SerializeField]
     private float gridLength;
 
+    public bool PrintLogs { get => printLogs; set => printLogs = value; }
     public float AsteroidSpeed { get => asteroidSpeed; set => asteroidSpeed = Mathf.Clamp(value, 0f, 1000f); }
     public float AsteroidSpawnInterval { get => asteroidSpawnInterval; set => asteroidSpawnInterval = Mathf.Clamp(value, 0f, 100f); }
     public int AsteroidsInGroup { get => asteroidsInGroup; set => asteroidsInGroup = Mathf.Clamp(value, 0, 9); }

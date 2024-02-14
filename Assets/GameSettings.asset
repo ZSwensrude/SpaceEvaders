@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidSpeed: 30
   asteroidSpawnInterval: 5
-  asteroidsInGroup: 1
+  asteroidsInGroup: 5
   moveDistance: 2.2
   moveSpeed: 25
   gridLength: 2.2
