@@ -15,3 +15,6 @@ MonoBehaviour:
   asteroidSpeed: 10
   asteroidSpawnInterval: 5
   asteroidsInGroup: 1
+  moveDistance: 2
+  moveSpeed: 25
+  gridLength: 2
