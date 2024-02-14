@@ -63,8 +63,6 @@ public class AsteroidSpawner : MonoBehaviour
             spawnInterval = gameSettings.AsteroidSpawnInterval;
             numToSpawn = gameSettings.AsteroidsInGroup;
     
-            // spawn asteroids
-            SpawnAsteroids(numToSpawn);
 
             int[] locations = GetAsteroids(5);
             String log = "Random asteroids list: [";
@@ -75,6 +73,9 @@ public class AsteroidSpawner : MonoBehaviour
             log = log + "]";
             Debug.Log(log);
 
+            // spawn asteroids
+            SpawnAsteroids(locations);
+
             // increase speed of next asteroids (proof that we can change the speed while playing)
             gameSettings.AsteroidSpeed = asteroidSpeed + 10f;
 
@@ -84,12 +85,32 @@ public class AsteroidSpawner : MonoBehaviour
     }
 
 
-    private void SpawnAsteroids (int num)
+    private void SpawnAsteroids (int[] locations)
     {
-        for (int i = 0; i < num; i++)
+        int x = -1;
+        int y = -1;
+        Vector3 spawnPosition;
+
+        for (int i = 1; i < locations.Length + 1; i++)
         {
-            // randomly get position to spawn asteroid 
-            Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], transform.position, Quaternion.identity).GetComponent<Asteroid>();
+            spawnPosition = new Vector3((transform.position.x - x), (transform.position.y - y), (transform.position.z));
+
+            Debug.Log("spawnPosition: " + spawnPosition.ToString());
+
+            if (locations[i-1] == 1)
+            {
+                // randomly get position to spawn asteroid 
+                Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], spawnPosition, Quaternion.identity).GetComponent<Asteroid>();
+            }
+            
+            x++;
+            
+            if (i % 3 == 0)
+            {
+                // reset x location and decrease y location
+                x = -1;
+                y++;
+            }
         }
     }
 
