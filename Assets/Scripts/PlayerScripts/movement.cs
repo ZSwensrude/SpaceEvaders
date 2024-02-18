@@ -36,13 +36,17 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private ParticleSystem starParticles;
     private ParticleSystem.TrailModule starTrails;
-    
-    
+    private ParticleSystem.MainModule starSpeed;
+    private float defaultStarSpeed;
+
+
     void Start()
     {
         // set up particle system for handling
         starTrails = starParticles.trails;
         starTrails.enabled = false;
+        starSpeed = starParticles.main;
+        defaultStarSpeed = starSpeed.simulationSpeed;
 
         // set up input action for boost
         boost = new InputAction(
@@ -164,12 +168,14 @@ public class Movement : MonoBehaviour
             Debug.Log("boosting");
             gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
             starTrails.enabled = true;
+            starSpeed.simulationSpeed *= gameSettings.BoostSpeed / 5;
         }
         else if (boost.WasReleasedThisFrame())
         {
             Debug.Log("stopped boosting");
             gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
             starTrails.enabled = false;
+            starSpeed.simulationSpeed = defaultStarSpeed;
         }
     }
 
