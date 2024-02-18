@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d161038c1d4cab441b904715a440868d, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  asteroidSpeed: 15
-  asteroidSpawnInterval: 2
+  asteroidSpeed: 10
+  asteroidSpawnInterval: 5
   asteroidsInGroup: 1
   boostSpeed: 10

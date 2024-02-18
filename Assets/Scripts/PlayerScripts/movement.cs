@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,9 +32,18 @@ public class Movement : MonoBehaviour
     private GameSettings gameSettings;
 
     private InputAction boost;
+
+    [SerializeField]
+    private ParticleSystem starParticles;
+    private ParticleSystem.TrailModule starTrails;
+    
     
     void Start()
     {
+        // set up particle system for handling
+        starTrails = starParticles.trails;
+        starTrails.enabled = false;
+
         // set up input action for boost
         boost = new InputAction(
             type: InputActionType.Button,
@@ -153,11 +163,13 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("boosting");
             gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
+            starTrails.enabled = true;
         }
         else if (boost.WasReleasedThisFrame())
         {
             Debug.Log("stopped boosting");
             gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
+            starTrails.enabled = false;
         }
     }
 

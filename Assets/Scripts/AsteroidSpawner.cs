@@ -46,7 +46,7 @@ public class AsteroidSpawner : MonoBehaviour
             SpawnAsteroids(numToSpawn);
 
             // increase speed of next asteroids (proof that we can change the speed while playing)
-            gameSettings.AsteroidSpeed = asteroidSpeed + 10f;
+            //gameSettings.AsteroidSpeed = asteroidSpeed + 10f;
 
             // wait for the interval before running again
             yield return new WaitForSeconds(spawnInterval);
