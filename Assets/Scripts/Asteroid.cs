@@ -20,12 +20,12 @@ public class Asteroid : MonoBehaviour
     {
         Debug.Log("asteroid spawned!");
         targetPosition = new Vector3(transform.position.x, transform.position.y, despawnZ);
-        speed = gameSettings.AsteroidSpeed;
-        step = speed * Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
+        speed = gameSettings.AsteroidSpeed;
+        step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
         if (transform.position.z == despawnZ)
         {

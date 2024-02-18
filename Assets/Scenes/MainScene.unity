@@ -6149,6 +6149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 2
   moveSpeed: 25
+  gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
 --- !u!1 &853066310
 GameObject:
   m_ObjectHideFlags: 0

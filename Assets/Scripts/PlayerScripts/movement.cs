@@ -27,6 +27,9 @@ public class Movement : MonoBehaviour
    //Keeps track of player's current vertical position on grid
    private int vertical = 0;
 
+    [SerializeField]
+    private GameSettings gameSettings;
+
     private InputAction boost;
     
     void Start()
@@ -149,10 +152,12 @@ public class Movement : MonoBehaviour
         if (boost.WasPressedThisFrame())
         {
             Debug.Log("boosting");
+            gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
         }
         else if (boost.WasReleasedThisFrame())
         {
             Debug.Log("stopped boosting");
+            gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
         }
     }
 
