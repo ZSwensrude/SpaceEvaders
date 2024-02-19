@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    private bool printLogs;
+
     [SerializeField]
     private GameSettings gameSettings;
 
@@ -18,7 +20,10 @@ public class Asteroid : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("asteroid spawned!");
+        printLogs = gameSettings.PrintLogs;
+
+        if (printLogs)
+            Debug.Log("asteroid spawned!");
         targetPosition = new Vector3(transform.position.x, transform.position.y, despawnZ);
     }
 

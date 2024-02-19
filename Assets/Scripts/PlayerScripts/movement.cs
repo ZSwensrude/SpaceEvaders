@@ -10,23 +10,33 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
 
-   //For future use ;)
-   private PlayerInput playerInput;
+    //For future use ;)
+    private PlayerInput playerInput;
 
     //Controls movement distance
     public float moveDistance = 2f;
+    [SerializeField]
+    private GameSettings gameSettings;
 
-   //Controls speed during movement. Used for smoothing
-   //"MoveTowards" function called during update
-   public float moveSpeed = 25f;
+    //Controls movement distance
+    public float moveDistance;
+    //Controls speed during movement. Used for smoothing
+    //"MoveTowards" function called during update
+    public float moveSpeed;
 
-   //Public variable that store movement direction for player
-   private Vector3 transVec = new Vector3(0, 0, 0);
+    //Public variable that store movement direction for player
+    private Vector3 transVec = new Vector3(0, 0, 0);
+ 
+    //Keeps track of player's current horizontal position on grid
+    private int horizontal = 0;
+    //Keeps track of player's current vertical position on grid
+    private int vertical = 0;
 
-   //Keeps track of player's current horizontal position on grid
-   private int horizontal = 0;
-   //Keeps track of player's current vertical position on grid
-   private int vertical = 0;
+    private void Start()
+    {
+        moveDistance = gameSettings.MoveDistance; 
+        moveSpeed = gameSettings.MoveSpeed;
+    }
 
     [SerializeField]
     private GameSettings gameSettings;
