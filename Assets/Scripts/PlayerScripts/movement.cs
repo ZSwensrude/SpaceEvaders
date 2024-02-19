@@ -13,8 +13,6 @@ public class Movement : MonoBehaviour
     //For future use ;)
     private PlayerInput playerInput;
 
-    //Controls movement distance
-    public float moveDistance = 2f;
     [SerializeField]
     private GameSettings gameSettings;
 
@@ -32,15 +30,6 @@ public class Movement : MonoBehaviour
     //Keeps track of player's current vertical position on grid
     private int vertical = 0;
 
-    private void Start()
-    {
-        moveDistance = gameSettings.MoveDistance; 
-        moveSpeed = gameSettings.MoveSpeed;
-    }
-
-    [SerializeField]
-    private GameSettings gameSettings;
-
     private InputAction boost;
 
     [SerializeField]
@@ -52,6 +41,9 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        moveDistance = gameSettings.MoveDistance;
+        moveSpeed = gameSettings.MoveSpeed;
+
         // set up particle system for handling
         starTrails = starParticles.trails;
         starTrails.enabled = false;

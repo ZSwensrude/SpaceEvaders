@@ -6148,9 +6148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f8fca4741ec1a4dad859f28aa8fab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
   moveDistance: 2
   moveSpeed: 25
-  gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
   starParticles: {fileID: 603394935}
 --- !u!1 &853066310
 GameObject:
@@ -6389,8 +6389,8 @@ MonoBehaviour:
   - {fileID: 1138399307392819582, guid: feff820cddc3d5b4cb28fc640cd0cdb9, type: 3}
   - {fileID: 2925477949688139712, guid: a8907626c351bc043b905054757625fe, type: 3}
   spawnInterval: 5
-  numToSpawn: 1
-  asteroidSpeed: 10
+  numToSpawn: 5
+  asteroidSpeed: 15
 --- !u!4 &1010385977
 Transform:
   m_ObjectHideFlags: 0
@@ -6400,7 +6400,7 @@ Transform:
   m_GameObject: {fileID: 1010385975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 40}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
