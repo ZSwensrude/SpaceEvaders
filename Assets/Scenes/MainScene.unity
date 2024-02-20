@@ -668,113 +668,6 @@ Transform:
   - {fileID: 2086898986}
   m_Father: {fileID: 1018279699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &437142665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 437142669}
-  - component: {fileID: 437142668}
-  - component: {fileID: 437142667}
-  - component: {fileID: 437142666}
-  m_Layer: 0
-  m_Name: Cylinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!136 &437142666
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437142665}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0000005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &437142667
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437142665}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &437142668
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437142665}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &437142669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437142665}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 2, z: 0.1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &553143884
 GameObject:
   m_ObjectHideFlags: 0
@@ -6032,6 +5925,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1956166264812504205, guid: d3be09ae4e55ace45bb777711e8118e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 838082575}
+    - targetCorrespondingSourceObject: {fileID: 1956166264812504205, guid: d3be09ae4e55ace45bb777711e8118e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 838082576}
   m_SourcePrefab: {fileID: 100100000, guid: d3be09ae4e55ace45bb777711e8118e8, type: 3}
 --- !u!1 &838082568 stripped
 GameObject:
@@ -6128,7 +6024,19 @@ MonoBehaviour:
     m_ActionId: 3137e1c3-582d-4668-bea3-614c329403f2
     m_ActionName: Player/MoveRight[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 838082576}
+        m_TargetAssemblyTypeName: Fire, Assembly-CSharp
+        m_MethodName: FireLaser
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 324dd7e8-6ae6-4be2-ad97-84899bef24f4
     m_ActionName: Player/Shoot[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
@@ -6152,6 +6060,21 @@ MonoBehaviour:
   moveDistance: 2
   moveSpeed: 25
   starParticles: {fileID: 603394935}
+--- !u!114 &838082576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838082568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed447f27afa4c76429c06fdd050c3861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: 1308645891867098281, guid: 6696bd19bb4fadd44bf3ce3b2020640c, type: 3}
+  laserOffset: {x: 0, y: 0, z: 3}
+  laserMax: 10
 --- !u!1 &853066310
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,5 +7699,5 @@ SceneRoots:
   - {fileID: 1018279699}
   - {fileID: 675874076}
   - {fileID: 1010385977}
-  - {fileID: 437142669}
+  - {fileID: 0}
   - {fileID: 603394936}
