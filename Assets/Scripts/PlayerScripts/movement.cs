@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,10 +30,32 @@ public class Movement : MonoBehaviour
     //Keeps track of player's current vertical position on grid
     private int vertical = 0;
 
-    private void Start()
+    private InputAction boost;
+
+    [SerializeField]
+    private ParticleSystem starParticles;
+    private ParticleSystem.TrailModule starTrails;
+    private ParticleSystem.MainModule starSpeed;
+    private float defaultStarSpeed;
+
+
+    void Start()
     {
-        moveDistance = gameSettings.MoveDistance; 
+        moveDistance = gameSettings.MoveDistance;
         moveSpeed = gameSettings.MoveSpeed;
+
+        // set up particle system for handling
+        starTrails = starParticles.trails;
+        starTrails.enabled = false;
+        starSpeed = starParticles.main;
+        defaultStarSpeed = starSpeed.simulationSpeed;
+
+        // set up input action for boost
+        boost = new InputAction(
+            type: InputActionType.Button,
+            binding: "Keyboard/shift");
+
+        boost.Enable();
     }
 
 
@@ -137,6 +160,25 @@ public class Movement : MonoBehaviour
 
       transform.position = Vector3.MoveTowards(transform.position, transVec, step);
 
-   }
+    }
+
+    private void Update()
+    {
+        // handle boosting in update so doesnt break if clicked more than once a frame
+        if (boost.WasPressedThisFrame())
+        {
+            Debug.Log("boosting");
+            gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
+            starTrails.enabled = true;
+            starSpeed.simulationSpeed *= gameSettings.BoostSpeed / 5;
+        }
+        else if (boost.WasReleasedThisFrame())
+        {
+            Debug.Log("stopped boosting");
+            gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
+            starTrails.enabled = false;
+            starSpeed.simulationSpeed = defaultStarSpeed;
+        }
+    }
 
 }

@@ -18,6 +18,9 @@ public class GameSettings : ScriptableObject
     private int asteroidsInGroup;
 
     [SerializeField]
+    private float boostSpeed;
+
+    [SerializeField]
     private float moveDistance;
 
     [SerializeField]
@@ -32,5 +35,6 @@ public class GameSettings : ScriptableObject
     public int AsteroidsInGroup { get => asteroidsInGroup; set => asteroidsInGroup = Mathf.Clamp(value, 0, 9); }
     public float MoveDistance { get => moveDistance; set => moveDistance = value; }
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public float BoostSpeed { get => boostSpeed; set => boostSpeed = value; }
     public float GridLength { get => gridLength; set => gridLength = value; }
 }
