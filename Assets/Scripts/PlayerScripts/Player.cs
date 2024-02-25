@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-   
+
+    public void OnCollisionEnter(Collision collision) 
+    {
+        Destroy(collision.gameObject);
+        Destroy(gameObject);
+    }
 }
