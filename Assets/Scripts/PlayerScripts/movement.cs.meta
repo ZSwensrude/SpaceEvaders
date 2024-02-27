@@ -3,7 +3,9 @@ guid: 84f8fca4741ec1a4dad859f28aa8fab4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
+  - starParticles: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
