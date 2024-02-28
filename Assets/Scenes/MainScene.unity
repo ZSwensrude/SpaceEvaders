@@ -234,6 +234,7 @@ MonoBehaviour:
   DistanceObject: {fileID: 173943730}
   NextStopObject: {fileID: 278715109}
   gameSettings: {fileID: 11400000, guid: 584c723bfe6c0f648a6a66696dd69dfe, type: 2}
+  scoreMultiplier: 1
 --- !u!4 &131811646
 Transform:
   m_ObjectHideFlags: 0

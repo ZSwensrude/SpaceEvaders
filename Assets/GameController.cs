@@ -48,14 +48,14 @@ public class GameController : MonoBehaviour
 
     bool incrementScore = false;
 
-    int scoreMultiplier = 0;
-    public int ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
+    [SerializeField]
+    float scoreMultiplier = 1;
+    public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
 
     private void Awake()
     {
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
-        ScoreMultiplier = gameSettings.ScoreMultiplier;
 
         highscoreText = HighScoreObject.GetComponent<TextMeshProUGUI>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
@@ -115,6 +115,7 @@ public class GameController : MonoBehaviour
     {
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
+        ScoreMultiplier *= speedMultiplier;
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
@@ -126,7 +127,7 @@ public class GameController : MonoBehaviour
         score += pointsPerSecond * ScoreMultiplier * Time.deltaTime;
         scoreText.text = ((int)score).ToString();
         // update multiplier in case it was changed
-        scoreMultiplierText.text = "x" + scoreMultiplier.ToString();
+        scoreMultiplierText.text = "x" + scoreMultiplier.ToString("F1");
 
         // if new highscore
         if (score > highScore)

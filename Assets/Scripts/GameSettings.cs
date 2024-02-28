@@ -33,8 +33,6 @@ public class GameSettings : ScriptableObject
     private float gridLength;
 
     [Header("Score Settings")]
-    [SerializeField]
-    private int scoreMultiplier;
 
     [SerializeField]
     private bool incrementScore;
@@ -48,6 +46,5 @@ public class GameSettings : ScriptableObject
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
     public float BoostSpeed { get => boostSpeed; set => boostSpeed = value; }
     public float GridLength { get => gridLength; set => gridLength = value; }
-    public int ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
     public bool IncrementScore { get => incrementScore; set => incrementScore = value; }
 }
