@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField]
+    AsteroidSpawner spawner;
 
     [SerializeField]
     GameObject ScoreObject;
@@ -32,8 +34,16 @@ public class GameController : MonoBehaviour
 
     float score = 0;
     int highScore = 0;
-    bool incrementScore = false;
     float pointsPerSecond = 0;
+
+    float distance = 0;
+    float nextStopDistance = 0;
+    // default distance to next stop
+    readonly int stopDistance = 25;
+    int stopsHit = 1;
+    int timeToWait = 5;
+
+    bool incrementScore = false;
 
     int scoreMultiplier = 0;
     public int ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
@@ -47,6 +57,16 @@ public class GameController : MonoBehaviour
         highscoreText = HighScoreObject.GetComponent<TextMeshProUGUI>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highscoreText.text = highScore.ToString();
+
+        distanceText = DistanceObject.GetComponent<TextMeshProUGUI>();
+        nextStopText = NextStopObject.GetComponent<TextMeshProUGUI>();
+
+        // set initial stop distance
+        nextStopDistance = stopDistance;
+
+        // make sure everything is running (might be false if stopped during a break)
+        gameSettings.IncrementScore = true;
+        spawner.RunSpawner = true;
     }
 
     // Update is called once per frame
@@ -59,11 +79,45 @@ public class GameController : MonoBehaviour
         if (incrementScore)
         {
             IncrementScore();
+            IncrementDistance();
+        } else
+        {
+            Debug.Log(incrementScore);
         }
+
         
     }
 
-    
+    private void IncrementDistance()
+    {
+        distance += pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
+        nextStopDistance -= pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
+
+        if (nextStopDistance <= 0)
+        {
+            gameSettings.IncrementScore = false;
+            spawner.RunSpawner = false;
+
+            stopsHit++;
+            nextStopDistance = stopDistance * stopsHit;
+
+            // give player break before starting again
+            StartCoroutine("WaitBetweenStops");
+            
+        }
+
+        distanceText.text = ((int)distance).ToString() + "ly";
+        nextStopText.text = ((int)nextStopDistance).ToString() + "ly";
+
+    }
+
+    private IEnumerator WaitBetweenStops ()
+    {
+        yield return new WaitForSeconds(timeToWait);
+        gameSettings.IncrementScore = true;
+        spawner.RunSpawner = true;
+    }
+
     private void IncrementScore()
     {
         // increment score based on points/sec * multiplier
