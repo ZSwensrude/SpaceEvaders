@@ -6361,7 +6361,7 @@ MonoBehaviour:
   - {fileID: 2925477949688139712, guid: a8907626c351bc043b905054757625fe, type: 3}
   spawnInterval: 5
   numToSpawn: 5
-  asteroidSpeed: 15
+  asteroidSpeed: 25
 --- !u!4 &1010385977
 Transform:
   m_ObjectHideFlags: 0

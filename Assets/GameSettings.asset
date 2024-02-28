@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   printLogs: 0
-  asteroidSpeed: 15
+  asteroidSpeed: 20
   asteroidSpawnInterval: 5
   asteroidsInGroup: 5
   boostSpeed: 2

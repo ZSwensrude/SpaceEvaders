@@ -16,12 +16,24 @@ public class GameController : MonoBehaviour
     TextMeshProUGUI scoreMultiplierText;
 
     [SerializeField]
+    GameObject HighScoreObject;
+    TextMeshProUGUI highscoreText;
+
+    [SerializeField]
+    GameObject DistanceObject;
+    TextMeshProUGUI distanceText;
+
+    [SerializeField]
+    GameObject NextStopObject;
+    TextMeshProUGUI nextStopText;
+
+    [SerializeField]
     GameSettings gameSettings;
 
     float score = 0;
     int highScore = 0;
     bool incrementScore = false;
-    float pointsPerSecond = 5;
+    float pointsPerSecond = 0;
 
     int scoreMultiplier = 0;
     public int ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
@@ -30,16 +42,21 @@ public class GameController : MonoBehaviour
     {
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
-     
         ScoreMultiplier = gameSettings.ScoreMultiplier;
-        incrementScore = gameSettings.IncrementScore;
+
+        highscoreText = HighScoreObject.GetComponent<TextMeshProUGUI>();
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highscoreText.text = highScore.ToString();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        // update from game settings (in case they changed elsewhere)
+        incrementScore = gameSettings.IncrementScore;
+        pointsPerSecond = gameSettings.AsteroidSpeed;
 
-        if(incrementScore)
+        if (incrementScore)
         {
             IncrementScore();
         }
@@ -54,12 +71,16 @@ public class GameController : MonoBehaviour
         scoreText.text = ((int)score).ToString();
         // update multiplier in case it was changed
         scoreMultiplierText.text = "x" + scoreMultiplier.ToString();
+
+        // if new highscore
+        if (score > highScore)
+        {
+            highScore = (int)score;
+            highscoreText.text = highScore.ToString();
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
     }
 
 
-    void CheckHighScore()
-    {
-        
-    }
     
 }
