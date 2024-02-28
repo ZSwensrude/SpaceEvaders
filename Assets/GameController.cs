@@ -18,38 +18,48 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameSettings gameSettings;
 
-    int score = 0;
+    float score = 0;
     int highScore = 0;
+    bool incrementScore = false;
+    float pointsPerSecond = 5;
+
     int scoreMultiplier = 0;
+    public int ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
 
     private void Awake()
     {
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
      
-        scoreMultiplier = gameSettings.ScoreMultiplier;
-
+        ScoreMultiplier = gameSettings.ScoreMultiplier;
+        incrementScore = gameSettings.IncrementScore;
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreMultiplier++;
-        Debug.Log("scoreMultiplier" + scoreMultiplier);
-        scoreMultiplierText.text = "x" + scoreMultiplier.ToString();
+
+        if(incrementScore)
+        {
+            IncrementScore();
+        }
         
     }
 
-    /*
+    
     private void IncrementScore()
     {
-        score += score * scoreMultiplier;
+        // increment score based on points/sec * multiplier
+        score += pointsPerSecond * ScoreMultiplier * Time.deltaTime;
+        scoreText.text = ((int)score).ToString();
+        // update multiplier in case it was changed
+        scoreMultiplierText.text = "x" + scoreMultiplier.ToString();
     }
 
 
     void CheckHighScore()
     {
-        if (score > )
+        
     }
-    */
+    
 }

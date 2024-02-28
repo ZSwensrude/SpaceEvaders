@@ -38,6 +38,9 @@ public class Movement : MonoBehaviour
     private ParticleSystem.MainModule starSpeed;
     private float defaultStarSpeed;
 
+    [SerializeField]
+    private GameController controller;
+
 
     void Start()
     {
@@ -171,6 +174,7 @@ public class Movement : MonoBehaviour
             gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= gameSettings.BoostSpeed / 5;
+            controller.ScoreMultiplier *= 2;
         }
         else if (boost.WasReleasedThisFrame())
         {
@@ -178,6 +182,7 @@ public class Movement : MonoBehaviour
             gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
+            controller.ScoreMultiplier /= 2;
         }
     }
 

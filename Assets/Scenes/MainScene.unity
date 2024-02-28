@@ -6107,6 +6107,7 @@ MonoBehaviour:
   moveDistance: 2
   moveSpeed: 25
   starParticles: {fileID: 603394935}
+  controller: {fileID: 131811645}
 --- !u!114 &838082576
 MonoBehaviour:
   m_ObjectHideFlags: 0
