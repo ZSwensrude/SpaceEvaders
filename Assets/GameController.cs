@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,9 +40,11 @@ public class GameController : MonoBehaviour
     float distance = 0;
     float nextStopDistance = 0;
     // default distance to next stop
-    readonly int stopDistance = 25;
+    readonly int stopDistance = 100;
     int stopsHit = 1;
     int timeToWait = 5;
+
+    float speedMultiplier = 1.2f;
 
     bool incrementScore = false;
 
@@ -80,9 +83,6 @@ public class GameController : MonoBehaviour
         {
             IncrementScore();
             IncrementDistance();
-        } else
-        {
-            Debug.Log(incrementScore);
         }
 
         
@@ -113,6 +113,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitBetweenStops ()
     {
+        gameSettings.AsteroidSpeed *= speedMultiplier;
+        gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
