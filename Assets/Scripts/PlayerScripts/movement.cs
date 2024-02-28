@@ -171,15 +171,15 @@ public class Movement : MonoBehaviour
         if (boost.WasPressedThisFrame())
         {
             Debug.Log("boosting");
-            gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
             starTrails.enabled = true;
-            starSpeed.simulationSpeed *= gameSettings.BoostSpeed / 5;
+            starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
             controller.ScoreMultiplier *= 2;
         }
         else if (boost.WasReleasedThisFrame())
         {
             Debug.Log("stopped boosting");
-            gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
             controller.ScoreMultiplier /= 2;
