@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Controls player movement
@@ -37,6 +38,13 @@ public class Movement : MonoBehaviour
     private ParticleSystem.TrailModule starTrails;
     private ParticleSystem.MainModule starSpeed;
     private float defaultStarSpeed;
+
+    [SerializeField]
+    private Slider boostGauge;
+    private bool isBoosting = false;
+    private float boostPercent = 100;
+    private int boostRegen = 20;
+    private int boostUsage = 15;
 
     [SerializeField]
     private GameController controller;
@@ -168,22 +176,32 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         // handle boosting in update so doesnt break if clicked more than once a frame
-        if (boost.WasPressedThisFrame())
+        if (boost.WasPressedThisFrame() && boostPercent > 0)
         {
-            Debug.Log("boosting");
+            isBoosting = true;
             gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
             controller.ScoreMultiplier *= 2;
         }
-        else if (boost.WasReleasedThisFrame())
+        else if ((boost.WasReleasedThisFrame() || boostPercent <= 0) && isBoosting)
         {
-            Debug.Log("stopped boosting");
+            isBoosting = false;
             gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
             controller.ScoreMultiplier /= 2;
         }
+        
+        if (isBoosting)
+        {
+            boostPercent -= boostUsage * Time.deltaTime;
+        }
+        else if (!isBoosting && boostPercent < 100)
+        {
+            boostPercent += boostRegen * Time.deltaTime;
+        }
+        Debug.Log("Boost at: " + boostPercent + "%");
     }
 
 }
