@@ -184,6 +184,7 @@ public class Movement : MonoBehaviour
         {
             isBoosting = true;
             gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpawnInterval /= gameSettings.BoostSpeed;
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
             controller.ScoreMultiplier *= 2;
@@ -192,6 +193,7 @@ public class Movement : MonoBehaviour
         {
             isBoosting = false;
             gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpawnInterval *= gameSettings.BoostSpeed;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
             controller.ScoreMultiplier /= 2;

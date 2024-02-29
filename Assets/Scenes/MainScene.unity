@@ -6476,7 +6476,7 @@ MonoBehaviour:
   - {fileID: 5047998980140428262, guid: 566469261302ee74a8643ea2c9018927, type: 3}
   - {fileID: 1138399307392819582, guid: feff820cddc3d5b4cb28fc640cd0cdb9, type: 3}
   - {fileID: 2925477949688139712, guid: a8907626c351bc043b905054757625fe, type: 3}
-  spawnInterval: 5
+  spawnInterval: 2
   numToSpawn: 5
   asteroidSpeed: 25
 --- !u!4 &1010385977
