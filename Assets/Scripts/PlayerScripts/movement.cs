@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 /// <summary>
 /// Controls player movement
@@ -41,10 +41,11 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     private Slider boostGauge;
+
     private bool isBoosting = false;
     private float boostPercent = 100;
-    private int boostRegen = 20;
-    private int boostUsage = 15;
+    private int boostRegen = 40;
+    private int boostUsage = 30;
 
     [SerializeField]
     private GameController controller;
@@ -201,7 +202,9 @@ public class Movement : MonoBehaviour
         {
             boostPercent += boostRegen * Time.deltaTime;
         }
-        Debug.Log("Boost at: " + boostPercent + "%");
+
+        // set value of boost slider
+        boostGauge.value = boostPercent/100;
     }
 
 }
