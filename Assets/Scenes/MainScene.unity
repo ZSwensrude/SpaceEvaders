@@ -6223,6 +6223,7 @@ MonoBehaviour:
   moveDistance: 2
   moveSpeed: 25
   starParticles: {fileID: 603394935}
+  boostGauge: {fileID: 1904327128}
   controller: {fileID: 131811645}
 --- !u!114 &838082576
 MonoBehaviour:
@@ -7679,7 +7680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -9.8, y: 0}
+  m_AnchoredPosition: {x: -9.800003, y: 0}
   m_SizeDelta: {x: 10.15, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1658521952
@@ -7842,7 +7843,7 @@ GameObject:
   - component: {fileID: 1904327127}
   - component: {fileID: 1904327128}
   m_Layer: 5
-  m_Name: BoostFuel
+  m_Name: BoostSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

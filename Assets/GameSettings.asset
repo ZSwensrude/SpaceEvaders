@@ -20,5 +20,6 @@ MonoBehaviour:
   moveDistance: 2.2
   moveSpeed: 25
   gridLength: 2.2
-  scoreMultiplier: 1
   incrementScore: 1
+  boostRegen: 45
+  boostUsage: 30

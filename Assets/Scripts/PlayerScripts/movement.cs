@@ -44,8 +44,8 @@ public class Movement : MonoBehaviour
 
     private bool isBoosting = false;
     private float boostPercent = 100;
-    private int boostRegen = 40;
-    private int boostUsage = 30;
+    private int boostRegen;
+    private int boostUsage;
 
     [SerializeField]
     private GameController controller;
@@ -55,6 +55,9 @@ public class Movement : MonoBehaviour
     {
         moveDistance = gameSettings.MoveDistance;
         moveSpeed = gameSettings.MoveSpeed;
+
+        boostRegen = gameSettings.BoostRegen;
+        boostUsage = gameSettings.BoostUsage;
 
         // set up particle system for handling
         starTrails = starParticles.trails;
