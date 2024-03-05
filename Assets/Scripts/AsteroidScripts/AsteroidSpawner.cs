@@ -23,6 +23,10 @@ public class AsteroidSpawner : MonoBehaviour
 
     private float gridLength;
 
+    private bool runSpawner = true;
+
+    public bool RunSpawner { get => runSpawner; set => runSpawner = value; }
+
     private void Awake()
     {
         printLogs = gameSettings.PrintLogs;
@@ -84,8 +88,11 @@ public class AsteroidSpawner : MonoBehaviour
                 Debug.Log(log);
             }
 
-            // spawn asteroids
-            SpawnAsteroids(locations);
+            if (RunSpawner)
+            {
+                // spawn asteroids
+                SpawnAsteroids(locations);
+            }
 
             // increase speed of next asteroids (proof that we can change the speed while playing)
             // gameSettings.AsteroidSpeed = asteroidSpeed + 10f;

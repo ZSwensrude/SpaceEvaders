@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Controls player movement
@@ -38,11 +39,25 @@ public class Movement : MonoBehaviour
     private ParticleSystem.MainModule starSpeed;
     private float defaultStarSpeed;
 
+    [SerializeField]
+    private Slider boostGauge;
+
+    private bool isBoosting = false;
+    private float boostPercent = 100;
+    private int boostRegen;
+    private int boostUsage;
+
+    [SerializeField]
+    private GameController controller;
+
 
     void Start()
     {
         moveDistance = gameSettings.MoveDistance;
         moveSpeed = gameSettings.MoveSpeed;
+
+        boostRegen = gameSettings.BoostRegen;
+        boostUsage = gameSettings.BoostUsage;
 
         // set up particle system for handling
         starTrails = starParticles.trails;
@@ -165,20 +180,36 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         // handle boosting in update so doesnt break if clicked more than once a frame
-        if (boost.WasPressedThisFrame())
+        if (boost.WasPressedThisFrame() && boostPercent > 0)
         {
-            Debug.Log("boosting");
-            gameSettings.AsteroidSpeed += gameSettings.BoostSpeed;
+            isBoosting = true;
+            gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpawnInterval /= gameSettings.BoostSpeed;
             starTrails.enabled = true;
-            starSpeed.simulationSpeed *= gameSettings.BoostSpeed / 5;
+            starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
+            controller.ScoreMultiplier *= 2;
         }
-        else if (boost.WasReleasedThisFrame())
+        else if ((boost.WasReleasedThisFrame() || boostPercent <= 0) && isBoosting)
         {
-            Debug.Log("stopped boosting");
-            gameSettings.AsteroidSpeed -= gameSettings.BoostSpeed;
+            isBoosting = false;
+            gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
+            gameSettings.AsteroidSpawnInterval *= gameSettings.BoostSpeed;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
+            controller.ScoreMultiplier /= 2;
         }
+        
+        if (isBoosting)
+        {
+            boostPercent -= boostUsage * Time.deltaTime;
+        }
+        else if (!isBoosting && boostPercent < 100)
+        {
+            boostPercent += boostRegen * Time.deltaTime;
+        }
+
+        // set value of boost slider
+        boostGauge.value = boostPercent/100;
     }
 
 }
