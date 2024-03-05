@@ -16,6 +16,13 @@ public class Laser : MonoBehaviour
         this.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, velocity);
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        Destroy(collision.gameObject);
+        Destroy(gameObject);
+        laserNum--;
+    }
+
     public void FixedUpdate() {
         if(transform.position.z >= despawnZ) {
             Destroy(gameObject);
