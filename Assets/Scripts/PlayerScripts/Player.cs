@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter(Collision collision) 
     {
         Destroy(collision.gameObject);
+        this.transform.localScale = new Vector3(0, 0, 0);
         gameOverScreen.GetComponent<CanvasGroup>().alpha = 1;
         Time.timeScale = 0;
         StartCoroutine(GameOver());
