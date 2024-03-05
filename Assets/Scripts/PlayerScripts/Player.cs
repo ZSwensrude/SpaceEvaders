@@ -12,23 +12,24 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter(Collision collision) 
     {
         Destroy(collision.gameObject);
-        Destroy(gameObject);
+        gameOverScreen.GetComponent<CanvasGroup>().alpha = 1;
+        Time.timeScale = 0;
         StartCoroutine(GameOver());
     }
 
     public IEnumerator GameOver()
     {
-        gameOverScreen.GetComponent<CanvasGroup>().alpha = 1;
-        Time.timeScale = 0;
-
-        if(Input.anyKey)
+        while(!Input.anyKeyDown) 
         {
-            Debug.Log("User pressed any key");
-            Time.timeScale = 1;
-            gameOverScreen.GetComponent<CanvasGroup>().alpha = 0;
-            SceneManager.LoadScene("TitleScreen");
             yield return null;
+
         }
+
+        Debug.Log("User pressed any key");
+        Time.timeScale = 1;
+        gameOverScreen.GetComponent<CanvasGroup>().alpha = 0;
+        SceneManager.LoadScene("TitleScreen");
+
     
     }
 
