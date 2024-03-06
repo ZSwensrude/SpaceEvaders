@@ -241,8 +241,9 @@ GameObject:
   - component: {fileID: 9216609943980251023}
   - component: {fileID: 3295859519898554894}
   - component: {fileID: 5697128177885533502}
+  - component: {fileID: 8832828426128902999}
   m_Layer: 0
-  m_Name: Asteroid 1
+  m_Name: Asteroid 1 (break)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,12 +333,25 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8832828426128902999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047998980140428262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c1aca55d9288445a249f227d38549a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroidShattered: {fileID: 1929211870184988123, guid: 0d4231249489d6d478fda80b0b2ff4d2, type: 3}
 --- !u!1 &5998486453514783340
 GameObject:
   m_ObjectHideFlags: 0
