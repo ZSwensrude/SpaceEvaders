@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6772308593096478647}
   - component: {fileID: 6250418114934122933}
   - component: {fileID: 8288744158640196549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid2_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44f9d629006bb76409d3626dd82797c0, type: 2}
+  - {fileID: 2100000, guid: b0073ebea30207748bb02d66bb40b053, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +96,10 @@ GameObject:
   - component: {fileID: 6076981733845463947}
   - component: {fileID: 2915563539198479145}
   - component: {fileID: 1299940044998287429}
-  m_Layer: 0
-  m_Name: Asteroid 2
+  - component: {fileID: 5749342197545312070}
+  - component: {fileID: 1509767068230246748}
+  m_Layer: 6
+  m_Name: Asteroid 2 (break)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,14 +189,50 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6296931
+  m_Height: 3.1419973
+  m_Direction: 1
+  m_Center: {x: -0.22384253, y: 0.33978975, z: 0.0048906463}
+--- !u!114 &5749342197545312070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138399307392819582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c1aca55d9288445a249f227d38549a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroidShattered: {fileID: 2723458907324192476, guid: 8dcb3486b23982e418de158fe3ad025c, type: 3}
+--- !u!136 &1509767068230246748
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138399307392819582}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75783944
-  m_Height: 3.158906
+  m_Radius: 0.5
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: -0.04838799, y: 0.36619085, z: 0.04577228}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3477417064930762457
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +244,7 @@ GameObject:
   - component: {fileID: 3790819218042506571}
   - component: {fileID: 2406839914522849349}
   - component: {fileID: 1234244621874377227}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid2_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +294,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44f9d629006bb76409d3626dd82797c0, type: 2}
+  - {fileID: 2100000, guid: b0073ebea30207748bb02d66bb40b053, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -288,7 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5277498587230481031}
   - component: {fileID: 7880291187616025709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid_LODGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +389,7 @@ GameObject:
   - component: {fileID: 5136139545792404181}
   - component: {fileID: 6560409177763250420}
   - component: {fileID: 265305981812207792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid2_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +439,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44f9d629006bb76409d3626dd82797c0, type: 2}
+  - {fileID: 2100000, guid: b0073ebea30207748bb02d66bb40b053, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

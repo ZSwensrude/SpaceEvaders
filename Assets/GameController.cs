@@ -116,6 +116,9 @@ public class GameController : MonoBehaviour
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
+        //50/50 chance to add another asteroid to max asteriods to spawn
+        if(Random.value < 0.5)
+            gameSettings.AsteroidsInGroup += 1; 
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;

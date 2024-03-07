@@ -18,7 +18,9 @@ public class Laser : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
+        // layer 6 is "breakable"
+        if (collision.gameObject.layer == 6)
+           Destroy(collision.gameObject);
         Destroy(gameObject);
         laserNum--;
     }
