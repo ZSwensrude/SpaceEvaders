@@ -10,7 +10,7 @@ public class AsteroidBreak : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Instantiate(asteroidShattered, transform.position, transform.rotation);
-        GetComponent<Rigidbody>().AddExplosionForce(200, transform.position, 5);
+        GetComponent<Rigidbody>().AddExplosionForce(2, transform.position, 50);
         Destroy(gameObject);
     }
 }
