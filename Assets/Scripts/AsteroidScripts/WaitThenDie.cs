@@ -12,15 +12,12 @@ public class WaitThenDie : MonoBehaviour
 
     IEnumerator WaitThenDestroy()
     {
-        Debug.Log("Waiting");
         yield return new WaitForSeconds(3);
 
-        Debug.Log("Destroying");
         foreach (Transform asteroidBit in gameObject.GetComponent<Transform>())
         {
             Destroy(asteroidBit.gameObject);
         }
-        Debug.Log("Destroyed");
     }
 
 }
