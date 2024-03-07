@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8738124789596055501}
   - component: {fileID: 5092065695015799986}
   - component: {fileID: 1527325676174179832}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3486418370232448225}
   - component: {fileID: 8036904848841676327}
   - component: {fileID: 5866331328838385011}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5211455972375839730}
   - component: {fileID: 1411842303605679698}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid_LODGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 3295859519898554894}
   - component: {fileID: 5697128177885533502}
   - component: {fileID: 8832828426128902999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Asteroid 1 (break)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -337,8 +337,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.80311614
+  m_Center: {x: 0, y: 0, z: -0.008311808}
 --- !u!114 &8832828426128902999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 8016151432378874211}
   - component: {fileID: 290940792604910939}
   - component: {fileID: 1652960947197077989}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: test_asteroid_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
