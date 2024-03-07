@@ -47,6 +47,8 @@ public class AsteroidSpawner : MonoBehaviour
     void Start()
     {
         Debug.Log("AsteroidSpawner Start");
+        // turn off spawner at start to do tutorial
+        RunSpawner = false;
         StartCoroutine(SpawnLoop());
     }
 
@@ -79,9 +81,27 @@ public class AsteroidSpawner : MonoBehaviour
         return positions;
     }
 
+    IEnumerator TutorialSpawn ()
+    {
+        // send one asteroid out in the middle of the screen
+        int[] locations = new int[9] { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+        SpawnAsteroids(locations);
+        // give them some time
+        yield return new WaitForSeconds(5);
+
+        // spawn a full layer of breakable asteroids
+        locations = new int[9] { 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+        SpawnAsteroids(locations);
+
+        yield return new WaitForSeconds(5);
+        RunSpawner = true;
+    }
+
 
     IEnumerator SpawnLoop ()
     {
+        StartCoroutine(TutorialSpawn());
+
         while (true)
         {
             // get values from scriptable object
@@ -89,21 +109,21 @@ public class AsteroidSpawner : MonoBehaviour
             spawnInterval = gameSettings.AsteroidSpawnInterval;
             numToSpawn = gameSettings.AsteroidsInGroup;
     
-            int[] locations = GetAsteroids(numToSpawn);
-            
-            if (printLogs)
-            {
-                String log = "Random asteroids list: [";
-                foreach (var item in locations)
-                {
-                    log = log + item.ToString() + " ";
-                }
-                log = log + "]";
-                Debug.Log(log);
-            }
-
             if (RunSpawner)
             {
+                int[] locations = GetAsteroids(numToSpawn);
+
+                if (printLogs)
+                {
+                    String log = "Random asteroids list: [";
+                    foreach (var item in locations)
+                    {
+                        log = log + item.ToString() + " ";
+                    }
+                    log = log + "]";
+                    Debug.Log(log);
+                }
+
                 // spawn asteroids
                 SpawnAsteroids(locations);
             }
