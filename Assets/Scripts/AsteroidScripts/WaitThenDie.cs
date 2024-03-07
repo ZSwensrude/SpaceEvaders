@@ -13,11 +13,7 @@ public class WaitThenDie : MonoBehaviour
     IEnumerator WaitThenDestroy()
     {
         yield return new WaitForSeconds(3);
-
-        foreach (Transform asteroidBit in gameObject.GetComponent<Transform>())
-        {
-            Destroy(asteroidBit.gameObject);
-        }
+        Destroy(gameObject);
     }
 
 }
