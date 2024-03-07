@@ -9,8 +9,12 @@ public class AsteroidBreak : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Instantiate(asteroidShattered, transform.position, Random.rotation).GetComponent<Transform>();
-        Instantiate(asteroidShattered, transform.position, Random.rotation).GetComponent<Transform>();
-        Destroy(gameObject);
+        // if on projectile layer
+        if (other.gameObject.layer == 3)
+        {
+            Instantiate(asteroidShattered, transform.position, Random.rotation).GetComponent<Transform>();
+            Instantiate(asteroidShattered, transform.position, Random.rotation).GetComponent<Transform>();
+            Destroy(gameObject);
+        }
     }
 }
