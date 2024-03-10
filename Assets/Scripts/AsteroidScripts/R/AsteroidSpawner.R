@@ -5,4 +5,4 @@ lambda = as.numeric(args[1])
 n = as.numeric(args[2])
 interTimes = rexp(n, lambda)
 
-print(interTimes)
+interTimes

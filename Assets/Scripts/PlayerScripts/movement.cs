@@ -83,6 +83,7 @@ public class Movement : MonoBehaviour
 
       if (context.performed)  
       {
+         controller.GetComponent<RAsteroidSpawner>().GetInterTimes();
 
          if (vertical < 1)
          {
