@@ -11,6 +11,7 @@ public class RAsteroidSpawner : MonoBehaviour
     public void GetInterTimes()
     {
         var expo = new Exponential(10);
+        
 
     }
 }

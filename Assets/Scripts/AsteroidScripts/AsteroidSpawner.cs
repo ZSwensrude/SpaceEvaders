@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MathNet.Numerics.Distributions;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -30,6 +32,8 @@ public class AsteroidSpawner : MonoBehaviour
     private float breakableChance = 0.10f;
 
     public bool RunSpawner { get => runSpawner; set => runSpawner = value; }
+
+    private Exponential expo = new Exponential(10);
 
     private void Awake()
     {
@@ -103,7 +107,7 @@ public class AsteroidSpawner : MonoBehaviour
     {
         StartCoroutine(TutorialSpawn());
 
-        while (true)
+        while (false)
         {
             // get values from scriptable object
             asteroidSpeed = gameSettings.AsteroidSpeed;
@@ -177,5 +181,35 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
+    public void SpawnStatisticalAsteroids()
+    {
+
+        Vector3 spawnPosition;
+
+        for (int i=-1; i <= 1; i++)
+        {
+            for (int j=-1; j<=1; j++)
+            {
+                spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
+
+                if (printLogs)
+                    Debug.Log("spawnPosition: " + spawnPosition.ToString());
+
+                StartCoroutine(StatisticalAsteroidGen(spawnPosition));
+            }
+        }
+
+    }
+
+    private IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition)
+    {
+        new WaitForSeconds((float)expo.Sample());
+        yield return Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+    }
+
+    public void FixedUpdate()
+    {
+        SpawnStatisticalAsteroids();
+    }
 
 }
