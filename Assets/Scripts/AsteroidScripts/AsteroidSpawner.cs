@@ -33,7 +33,7 @@ public class AsteroidSpawner : MonoBehaviour
 
     public bool RunSpawner { get => runSpawner; set => runSpawner = value; }
 
-    private Exponential expo = new Exponential(10);
+    private Exponential expo = new Exponential(0.1);
 
     private void Awake()
     {
@@ -54,6 +54,20 @@ public class AsteroidSpawner : MonoBehaviour
         // turn off spawner at start to do tutorial
         RunSpawner = false;
         StartCoroutine(SpawnLoop());
+        
+        Vector3 spawnPosition;
+
+        for (int i=-1; i <= 1; i++)
+        {
+            for (int j=-1; j<=1; j++)
+            {
+                spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
+
+                StartCoroutine(StatisticalAsteroidGen(spawnPosition));
+            }
+
+        }
+
     }
 
 
@@ -201,15 +215,14 @@ public class AsteroidSpawner : MonoBehaviour
 
     }
 
-    private IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition)
-    {
-        new WaitForSeconds((float)expo.Sample());
-        yield return Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
-    }
+    IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition)
+    { 
+        while(true){
+            yield return new WaitForSeconds((float)expo.Sample());
+            Debug.Log("yello");
+            Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+        }
 
-    public void FixedUpdate()
-    {
-        SpawnStatisticalAsteroids();
     }
 
 }
