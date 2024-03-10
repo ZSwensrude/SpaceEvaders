@@ -33,8 +33,13 @@ public class AsteroidSpawner : MonoBehaviour
 
     public bool RunSpawner { get => runSpawner; set => runSpawner = value; }
 
-    private Exponential expo = new Exponential(0.1);
 
+    //This is the default rate used for generating asteroids via the Poisson Process
+    //This value represents the amount of asteroids per second in a given square on average
+    [SerializeField]
+    private double defaultRate = 0.10;
+    private bool updateRate = false;
+    public bool  UpdateRate { get => updateRate; set => updateRate = value; }
     private void Awake()
     {
         printLogs = gameSettings.PrintLogs;
@@ -54,20 +59,7 @@ public class AsteroidSpawner : MonoBehaviour
         // turn off spawner at start to do tutorial
         RunSpawner = false;
         StartCoroutine(SpawnLoop());
-        
-        Vector3 spawnPosition;
-
-        for (int i=-1; i <= 1; i++)
-        {
-            for (int j=-1; j<=1; j++)
-            {
-                spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
-
-                StartCoroutine(StatisticalAsteroidGen(spawnPosition));
-            }
-
-        }
-
+        InitDistros(defaultRate);
     }
 
 
@@ -121,7 +113,7 @@ public class AsteroidSpawner : MonoBehaviour
     {
         StartCoroutine(TutorialSpawn());
 
-        while (false)
+        while (true)
         {
             // get values from scriptable object
             asteroidSpeed = gameSettings.AsteroidSpeed;
@@ -195,9 +187,30 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnStatisticalAsteroids()
-    {
+    // public void SpawnStatisticalAsteroids()
+    // {
 
+    //     Vector3 spawnPosition;
+
+    //     for (int i=-1; i <= 1; i++)
+    //     {
+    //         for (int j=-1; j<=1; j++)
+    //         {
+                
+                
+    //             spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
+
+    //             if (printLogs)
+    //                 Debug.Log("spawnPosition: " + spawnPosition.ToString());
+
+    //             StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate));
+    //         }
+    //     }
+
+    // }
+
+    public void InitDistros(double rate)
+    {
         Vector3 spawnPosition;
 
         for (int i=-1; i <= 1; i++)
@@ -205,24 +218,33 @@ public class AsteroidSpawner : MonoBehaviour
             for (int j=-1; j<=1; j++)
             {
                 spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
-
-                if (printLogs)
-                    Debug.Log("spawnPosition: " + spawnPosition.ToString());
-
-                StartCoroutine(StatisticalAsteroidGen(spawnPosition));
+                StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate));
             }
-        }
 
+        }
     }
 
-    IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition)
+    IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition, double rate)
     { 
-        while(true){
-            yield return new WaitForSeconds((float)expo.Sample());
-            Debug.Log("yello");
+
+        var currentExpo = new Exponential(rate);
+
+        while(!UpdateRate){
+            yield return new WaitForSeconds((float) currentExpo.Sample());
             Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
         }
 
+        StopCoroutine(StatisticalAsteroidGen(spawnPosition,rate));
+
+    }
+
+    public void Update()
+    {
+        if(UpdateRate){
+            Debug.Log(RunSpawner);
+            defaultRate += 0.05;
+            InitDistros(defaultRate);
+        }
     }
 
 }

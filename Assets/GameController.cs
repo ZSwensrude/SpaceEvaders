@@ -122,6 +122,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
+        spawner.UpdateRate = false;
     }
 
     private void IncrementScore()
