@@ -38,7 +38,11 @@ public class AsteroidSpawner : MonoBehaviour
     //This value represents the amount of asteroids per second in a given square on average
     [SerializeField]
     private double defaultRate = 0.10;
+    //updateRate used to check if we should change the rate for the asteroid
+    //spawning
     private bool updateRate = false;
+    //UpdateRate creates getters and setters for updateRate that can be
+    //accessed outside of this class
     public bool  UpdateRate { get => updateRate; set => updateRate = value; }
     private void Awake()
     {
@@ -187,28 +191,16 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
-    // public void SpawnStatisticalAsteroids()
-    // {
-
-    //     Vector3 spawnPosition;
-
-    //     for (int i=-1; i <= 1; i++)
-    //     {
-    //         for (int j=-1; j<=1; j++)
-    //         {
-                
-                
-    //             spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
-
-    //             if (printLogs)
-    //                 Debug.Log("spawnPosition: " + spawnPosition.ToString());
-
-    //             StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate));
-    //         }
-    //     }
-
-    // }
-
+    /// <summary>
+    /// Initialize Distributions for each square in the grid. Uses Poisson
+    /// Process to generate arrival times for each asteroid using Exponential
+    /// distribution.
+    /// Takes rate as a parameter to determine the number of asteroids in a
+    /// given square each second (expected value anyway). This rate is
+    /// also the mean lambda of the Poisson distribution this models.
+    /// </summary>
+    /// <param name="rate">Double representing the rate at which asteroids come
+    /// per second.</param>
     public void InitDistros(double rate)
     {
         Vector3 spawnPosition;
@@ -224,6 +216,14 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine that generates asteroids according to an exponential distribution.
+    /// Randomly samples values that represent the number of seconds before the
+    /// next asteroid spawns in that square.
+    /// </summary>
+    /// <param name="spawnPosition">Position of the asteroid to be spawned</param>
+    /// <param name="rate">Rate at which asteroids should be generated per second</param>
+    /// <returns>yield return WaitForSeconds</returns>
     IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition, double rate)
     { 
 
@@ -238,6 +238,10 @@ public class AsteroidSpawner : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Currently Update only updates the rate value for the exponential
+    /// distributions.
+    /// </summary>
     public void Update()
     {
         if(UpdateRate){
