@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WaitThenDie : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource breakSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,6 +15,7 @@ public class WaitThenDie : MonoBehaviour
 
     IEnumerator WaitThenDestroy()
     {
+        breakSound.Play();
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
