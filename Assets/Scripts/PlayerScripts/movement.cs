@@ -50,6 +50,8 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private GameController controller;
 
+    [SerializeField]
+    private AudioSource boostSound;
 
     void Start()
     {
@@ -188,6 +190,7 @@ public class Movement : MonoBehaviour
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
             controller.ScoreMultiplier *= 2;
+            boostSound.Play();
         }
         else if ((boost.WasReleasedThisFrame() || boostPercent <= 0) && isBoosting)
         {
@@ -197,8 +200,9 @@ public class Movement : MonoBehaviour
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
             controller.ScoreMultiplier /= 2;
+            boostSound.Stop();
         }
-        
+
         if (isBoosting)
         {
             boostPercent -= boostUsage * Time.deltaTime;
