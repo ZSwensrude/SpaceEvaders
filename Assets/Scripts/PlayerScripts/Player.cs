@@ -8,12 +8,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private GameObject gameOverScreen;
+    [SerializeField]
+    private AudioSource explosion;
 
     public void OnCollisionEnter(Collision collision) 
     {
         // if not on visual layer (asteroid bits mostly)
         if(collision.gameObject.layer != 7)
         {
+            explosion.Play();
             Destroy(collision.gameObject);
             this.transform.localScale = new Vector3(0, 0, 0);
             gameOverScreen.GetComponent<CanvasGroup>().alpha = 1;
