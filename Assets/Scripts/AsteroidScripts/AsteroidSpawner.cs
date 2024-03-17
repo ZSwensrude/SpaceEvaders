@@ -231,6 +231,8 @@ public class AsteroidSpawner : MonoBehaviour
 
         while(RunSpawner){
             yield return new WaitForSeconds((float) currentExpo.Sample());
+
+            //Verify that after waiting, we're still allowed to generate the asteroid
             if(RunSpawner)
             {
                 Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
@@ -248,8 +250,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void Update()
     {
         if(UpdateRate){
-            Debug.Log(UpdateRate);
-            defaultRate += 0.05;
+            defaultRate += 0.025;
             InitDistros(defaultRate);
             UpdateRate = false;
         }
