@@ -1296,6 +1296,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 838082568}
+    - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: spawner
       value: 
       objectReference: {fileID: 1010385976}
@@ -1303,6 +1307,10 @@ PrefabInstance:
       propertyPath: ScoreObject
       value: 
       objectReference: {fileID: 297835667}
+    - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
+      propertyPath: frameWeight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: DistanceObject
       value: 

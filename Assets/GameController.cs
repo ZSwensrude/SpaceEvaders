@@ -96,7 +96,6 @@ public class GameController : MonoBehaviour
         }
 
         StartCoroutine("GetPlayerWeights");
-
         
     }
 
@@ -113,6 +112,7 @@ public class GameController : MonoBehaviour
             nextStopDistance = stopDistance * stopsHit;
 
             // give player break before starting again
+            StartCoroutine("UpdateWeights");
             StartCoroutine("WaitBetweenStops");
             
         }
@@ -177,6 +177,14 @@ public class GameController : MonoBehaviour
                 asteroidWeighting[i] -= frameWeight/8;
             }
         }
+
+        yield return null;
+    }
+
+    public IEnumerator UpdateWeights()
+    {
+
+        spawner.UpdateWeights = asteroidWeighting;
 
         yield return null;
     }
