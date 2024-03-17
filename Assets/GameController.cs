@@ -97,7 +97,6 @@ public class GameController : MonoBehaviour
         {
             gameSettings.IncrementScore = false;
             spawner.RunSpawner = false;
-
             stopsHit++;
             nextStopDistance = stopDistance * stopsHit;
 
@@ -119,10 +118,11 @@ public class GameController : MonoBehaviour
         //50/50 chance to add another asteroid to max asteriods to spawn
         if(Random.value < 0.5)
             gameSettings.AsteroidsInGroup += 1; 
+
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
-        spawner.UpdateRate = false;
+        spawner.UpdateRate = true;
     }
 
     private void IncrementScore()
