@@ -177,5 +177,38 @@ public class GameController : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// Set all weights of asteroidWeighting
+    /// </summary>
+    /// <param name="weights">array of weights to set</param>
+    public void SetWeights(float[] weights)
+    {
+        for(int i=0; i < weights.Length; i++)
+        {
+            asteroidWeighting[i] = weights[i];
+        }
+    }
+    
+    /// <summary>
+    /// Set specific index of asteroidWeighting to supplied weight
+    /// </summary>
+    /// <param name="weight">float to be set as weight for specified index</param>
+    /// <param name="index">index of zone to have weight set</param>
+    /// <exception cref="ArgumentOutOfRangeException">invalid index supplied</exception>
+    public void SetWeight(float weight, int index)
+    {
+
+        try
+        {
+            asteroidWeighting[index] = weight;
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            throw new ArgumentOutOfRangeException(
+                "Index (" + index + ") given is not valid.", e
+            );
+        }
+
+    }
     
 }
