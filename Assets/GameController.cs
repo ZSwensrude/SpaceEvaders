@@ -34,6 +34,12 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameSettings gameSettings;
 
+    [SerializeField]
+    GameObject Player;
+
+    [SerializeField]
+    private float frameWeight;
+
     float score = 0;
     int highScore = 0;
     float pointsPerSecond = 0;
@@ -88,6 +94,8 @@ public class GameController : MonoBehaviour
             IncrementScore();
             IncrementDistance();
         }
+
+        StartCoroutine("GetPlayerWeights");
 
         
     }
@@ -144,6 +152,33 @@ public class GameController : MonoBehaviour
             highscoreText.text = highScore.ToString();
             PlayerPrefs.SetInt("HighScore", highScore);
         }
+    }
+
+    /// <summary>
+    /// Grab player position in grid coordinates and use that to update the asteroid
+    /// weighting later. Weights should sum to 1
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator GetPlayerWeights()
+    {
+        (int x, int y) = Player.GetComponent<Movement>().GetPlayerGridPos();
+
+        // convert from grid coordinates to index coordinates
+        x++; y++; y*=3;
+
+        // add weight to current pos
+        asteroidWeighting[x + y] += frameWeight;
+
+        for (int i=0; i < asteroidWeighting.Length; i++)
+        {
+            // remove weight from all other zones
+            if (i != x+y)
+            {
+                asteroidWeighting[i] -= frameWeight/8;
+            }
+        }
+
+        yield return null;
     }
 
     /// <summary>
