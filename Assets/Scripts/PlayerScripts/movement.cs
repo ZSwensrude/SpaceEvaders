@@ -216,4 +216,9 @@ public class Movement : MonoBehaviour
         boostGauge.value = boostPercent/100;
     }
 
+    public (int, int) GetPlayerGridPos()
+    {
+      return (horizontal, vertical);
+    }
+
 }
