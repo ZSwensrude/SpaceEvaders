@@ -37,7 +37,7 @@ public class AsteroidSpawner : MonoBehaviour
     //This is the default rate used for generating asteroids via the Poisson Process
     //This value represents the amount of asteroids per second in a given square on average
     [SerializeField]
-    private double defaultRate = 0.10;
+    private double defaultRate = 0.05;
     //updateRate used to check if we should change the rate for the asteroid
     //spawning
     private bool updateRate = false;
@@ -63,7 +63,6 @@ public class AsteroidSpawner : MonoBehaviour
         // turn off spawner at start to do tutorial
         RunSpawner = false;
         StartCoroutine(SpawnLoop());
-        InitDistros(defaultRate);
     }
 
 
@@ -110,6 +109,7 @@ public class AsteroidSpawner : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         RunSpawner = true;
+        UpdateRate = true;
     }
 
 
@@ -229,12 +229,15 @@ public class AsteroidSpawner : MonoBehaviour
 
         var currentExpo = new Exponential(rate);
 
-        while(!UpdateRate){
+        while(RunSpawner){
             yield return new WaitForSeconds((float) currentExpo.Sample());
-            Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+            if(RunSpawner)
+            {
+                Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+            }
         }
 
-        StopCoroutine(StatisticalAsteroidGen(spawnPosition,rate));
+        StopCoroutine("StatisticalAsteroidGen");
 
     }
 
@@ -245,9 +248,10 @@ public class AsteroidSpawner : MonoBehaviour
     public void Update()
     {
         if(UpdateRate){
-            Debug.Log(RunSpawner);
+            Debug.Log(UpdateRate);
             defaultRate += 0.05;
             InitDistros(defaultRate);
+            UpdateRate = false;
         }
     }
 
