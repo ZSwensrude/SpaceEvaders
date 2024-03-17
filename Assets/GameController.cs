@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -51,6 +52,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     float scoreMultiplier = 1;
     public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
+
+    //at beginning of game, each position is equally as likely to generate an asteroid
+    private float[] asteroidWeighting = {1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9};
 
     private void Awake()
     {
@@ -116,7 +120,7 @@ public class GameController : MonoBehaviour
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
         //50/50 chance to add another asteroid to max asteriods to spawn
-        if(Random.value < 0.5)
+        if(UnityEngine.Random.value < 0.5)
             gameSettings.AsteroidsInGroup += 1; 
 
         yield return new WaitForSeconds(timeToWait);
@@ -142,6 +146,36 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get probability weights for asteroids (all of them)
+    /// </summary>
+    /// <returns>probability weights for each zone as array of floats</returns>
+    public float[] GetWeights()
+    {
+        
+        return asteroidWeighting;
 
+    }
+
+    /// <summary>
+    /// Get specific weight for asteroid weighting
+    /// </summary>
+    /// <param name="index">int for index of the array</param>
+    /// <returns>the value of the index specified</returns>
+    /// <exception cref="ArgumentOutOfRangeException">index not valid</exception>
+    public float GetWeight(int index)
+    {
+        try
+        {
+            return asteroidWeighting[index];
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            throw new ArgumentOutOfRangeException(
+                "Index (" + index + ") given is not valid.", e
+            );
+        }
+
+    }
     
 }
