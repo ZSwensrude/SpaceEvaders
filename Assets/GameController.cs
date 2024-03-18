@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Accord.Math;
 
 public class GameController : MonoBehaviour
 {
@@ -60,7 +62,29 @@ public class GameController : MonoBehaviour
     public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
 
     //at beginning of game, each position is equally as likely to generate an asteroid
-    private float[] asteroidWeighting = {1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9};
+    private float[] asteroidWeighting = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+    private static double sigma = 1;
+
+    // private float[] gaussArr = {(float)Normal.Gaussian2D(sigma, -1, -1),
+    //                             (float)Normal.Gaussian2D(sigma, 0, -1),
+    //                             (float)Normal.Gaussian2D(sigma, 1, -1),
+    //                             (float)Normal.Gaussian2D(sigma, -1, 0),
+    //                             (float)Normal.Gaussian2D(sigma, 0, 0),
+    //                             (float)Normal.Gaussian2D(sigma, 0, 1),
+    //                             (float)Normal.Gaussian2D(sigma, -1, 1),
+    //                             (float)Normal.Gaussian2D(sigma, 0, 1),
+    //                             (float)Normal.Gaussian2D(sigma, 1, 1)};
+
+    private (double,double)[] gaussArr = {(-1,-1),
+                                        (0, -1),
+                                        (1, -1),
+                                        (-1, 0),
+                                        (0, 0),
+                                        (1, 0),
+                                        (-1, 1),
+                                        (0, 1),
+                                        (1, 1)};
 
     private void Awake()
     {
@@ -112,7 +136,6 @@ public class GameController : MonoBehaviour
             nextStopDistance = stopDistance * stopsHit;
 
             // give player break before starting again
-            StartCoroutine("UpdateWeights");
             StartCoroutine("WaitBetweenStops");
             
         }
@@ -130,7 +153,8 @@ public class GameController : MonoBehaviour
         //50/50 chance to add another asteroid to max asteriods to spawn
         if(UnityEngine.Random.value < 0.5)
             gameSettings.AsteroidsInGroup += 1; 
-
+        
+        StartCoroutine("UpdateWeights");
         yield return new WaitForSeconds(timeToWait);
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
@@ -167,24 +191,32 @@ public class GameController : MonoBehaviour
         x++; y++; y*=3;
 
         // add weight to current pos
-        asteroidWeighting[x + y] += frameWeight;
-
-        for (int i=0; i < asteroidWeighting.Length; i++)
-        {
-            // remove weight from all other zones
-            if (i != x+y)
-            {
-                asteroidWeighting[i] -= frameWeight/8;
-            }
-        }
+        asteroidWeighting[x + y]++;
 
         yield return null;
     }
 
     public IEnumerator UpdateWeights()
     {
+        double muX = 0;
+        double muY = 0;
+        float[] result = new float[9];
+        double sum = asteroidWeighting.Sum();
 
-        spawner.UpdateWeights = asteroidWeighting;
+        for (int i=0; i < asteroidWeighting.Length; i++) 
+        {
+            muX += ((i%3)-1)*asteroidWeighting[i];
+            muY += (i-1)%3*asteroidWeighting[i];
+        }
+
+        for (int i=0; i < result.Length; i++)
+        {
+            result[i] = (float)Normal.Gaussian2D(sigma, gaussArr[i].Item1 + muX/sum, gaussArr[i].Item2 + muY/sum);
+            Debug.Log(result[i]);
+        }
+
+        
+        spawner.UpdateWeights = result;
 
         yield return null;
     }

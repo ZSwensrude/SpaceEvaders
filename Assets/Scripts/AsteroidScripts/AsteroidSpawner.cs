@@ -44,8 +44,8 @@ public class AsteroidSpawner : MonoBehaviour
     //UpdateRate creates getters and setters for updateRate that can be
     //accessed outside of this class
     public bool  UpdateRate { get => updateRate; set => updateRate = value; }
-    private float[] weights = {1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9};
-    public float [] UpdateWeights { set => weights = value; }
+    private float[] weights = {1,1,1,1,1,1,1,1,1};
+    public float[] UpdateWeights { set => weights = value; }
     private void Awake()
     {
         printLogs = gameSettings.PrintLogs;
@@ -212,7 +212,6 @@ public class AsteroidSpawner : MonoBehaviour
             for (int j=-1; j<=1; j++)
             {
                 spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
-                Debug.Log(rate*weights[i+1 + (j+1)*3]);
                 StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate*weights[i+1 + (j+1)*3]));
             }
 
@@ -253,7 +252,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void Update()
     {
         if(UpdateRate){
-            defaultRate += 0.025;
+            defaultRate += 0.001;
             InitDistros(defaultRate);
             UpdateRate = false;
         }
