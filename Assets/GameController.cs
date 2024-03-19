@@ -120,8 +120,8 @@ public class GameController : MonoBehaviour
                 nextStopDistance = stopDistance * stopsHit;
             else
                 nextStopDistance = maxStopDistance;
-            // boss battle every 2 stops 
-            if (stopsHit % 2 == 0 && !bossActive)
+            // boss battle every 3 stops 
+            if (stopsHit % 3 == 0 && !bossActive)
             {
                 StartCoroutine("StartBossBattle");
             } else
