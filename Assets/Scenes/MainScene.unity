@@ -1199,8 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 328161177140656928, guid: 03e0fffba3f94034b9ab4e9229accfcf, type: 3}
       propertyPath: m_Url
-      value: file://C:/Users/zswen/OneDrive/Desktop/CMPT330/SpaceEvaders/Assets/Animated
-        Gas Planet/Textures/Animated_Gas_Planet.mp4
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 328161177140656928, guid: 03e0fffba3f94034b9ab4e9229accfcf, type: 3}
       propertyPath: m_DataSource
