@@ -1667,6 +1667,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6960480530972562192, guid: 64f720434581a5a45b78e0214b4885c4, type: 3}
+      propertyPath: bossBombsPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960480530972562192, guid: 64f720434581a5a45b78e0214b4885c4, type: 3}
       propertyPath: asteroidPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 5047998980140428262, guid: 75c08f096abd7e34db4213b5d17d83b4, type: 3}
@@ -1678,6 +1682,14 @@ PrefabInstance:
       propertyPath: asteroidPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 2925477949688139712, guid: c6b2eab1cfb7e8b40b4cc9ee9e28edca, type: 3}
+    - target: {fileID: 6960480530972562192, guid: 64f720434581a5a45b78e0214b4885c4, type: 3}
+      propertyPath: bossBombsPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5981626981383709076, guid: 0bf130ae4da90d8449d601766cece485, type: 3}
+    - target: {fileID: 6960480530972562192, guid: 64f720434581a5a45b78e0214b4885c4, type: 3}
+      propertyPath: bossBombsPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1241195721897886969, guid: 44f723b38ee2f0b44845d34312128d3c, type: 3}
     - target: {fileID: 6960480530972562192, guid: 64f720434581a5a45b78e0214b4885c4, type: 3}
       propertyPath: breakableAsteroidPrefabs.Array.size
       value: 3

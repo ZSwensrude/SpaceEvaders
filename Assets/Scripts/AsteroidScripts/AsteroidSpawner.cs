@@ -17,6 +17,9 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField]
     private List<GameObject> breakableAsteroidPrefabs;
 
+    [SerializeField]
+    private List<GameObject> bossBombsPrefabs;
+
     // used in script, also used to set default values
     [SerializeField]
     private float spawnInterval;
@@ -31,6 +34,8 @@ public class AsteroidSpawner : MonoBehaviour
 
     private float breakableChance = 0.10f;
 
+    private bool bossBattle = false;
+
     public bool RunSpawner { get => runSpawner; set => runSpawner = value; }
 
 
@@ -43,7 +48,7 @@ public class AsteroidSpawner : MonoBehaviour
     private bool updateRate = false;
     //UpdateRate creates getters and setters for updateRate that can be
     //accessed outside of this class
-    public bool  UpdateRate { get => updateRate; set => updateRate = value; }
+    public bool UpdateRate { get => updateRate; set => updateRate = value; }
     private void Awake()
     {
         printLogs = gameSettings.PrintLogs;
@@ -52,7 +57,7 @@ public class AsteroidSpawner : MonoBehaviour
         gameSettings.AsteroidSpeed = asteroidSpeed;
         gameSettings.AsteroidSpawnInterval = spawnInterval;
         gameSettings.AsteroidsInGroup = numToSpawn;
-        
+
         // get gridLength from game settings
         gridLength = gameSettings.GridLength;
     }
@@ -95,7 +100,7 @@ public class AsteroidSpawner : MonoBehaviour
         return positions;
     }
 
-    IEnumerator TutorialSpawn ()
+    IEnumerator TutorialSpawn()
     {
         // send one asteroid out in the middle of the screen
         int[] locations = new int[9] { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
@@ -113,7 +118,7 @@ public class AsteroidSpawner : MonoBehaviour
     }
 
 
-    IEnumerator SpawnLoop ()
+    IEnumerator SpawnLoop()
     {
         StartCoroutine(TutorialSpawn());
 
@@ -154,8 +159,29 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
+    public void StartBossBattle()
+    {
+        // stop normal spawning
+        RunSpawner = false;
+        StopCoroutine("StatisticalAsteroidGen");
+        // start boss battle
+        bossBattle = true;
 
-    private void SpawnAsteroids (int[] locations)
+        InitDistros(defaultRate);
+    }
+
+    public void StopBossBattle()
+    {
+        // stop normal spawning
+        RunSpawner = true;
+        // set up new values for boss
+        InitDistros(defaultRate);
+        // start boss battle
+        bossBattle = false;
+    }
+
+
+    private void SpawnAsteroids(int[] locations)
     {
         int x = -1;
         int y = -1;
@@ -163,17 +189,17 @@ public class AsteroidSpawner : MonoBehaviour
 
         for (int i = 1; i < locations.Length + 1; i++)
         {
-            spawnPosition = new Vector3((transform.position.x - (x * gridLength )), (transform.position.y - (y * gridLength)), (transform.position.z));
+            spawnPosition = new Vector3((transform.position.x - (x * gridLength)), (transform.position.y - (y * gridLength)), (transform.position.z));
 
             if (printLogs)
                 Debug.Log("spawnPosition: " + spawnPosition.ToString());
 
             // if the num is a 1 we want to spawn a normal asteroid
-            if (locations[i-1] == 1)
+            if (locations[i - 1] == 1)
             {
                 // randomly get position to spawn asteroid 
                 Instantiate(asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
-            } 
+            }
             // else if the num is a 2 we want to spawn a breakable one
             else if (locations[i - 1] == 2)
             {
@@ -181,7 +207,7 @@ public class AsteroidSpawner : MonoBehaviour
             }
 
             x++;
-            
+
             if (i % 3 == 0)
             {
                 // reset x location and decrease y location
@@ -205,11 +231,11 @@ public class AsteroidSpawner : MonoBehaviour
     {
         Vector3 spawnPosition;
 
-        for (int i=-1; i <= 1; i++)
+        for (int i = -1; i <= 1; i++)
         {
-            for (int j=-1; j<=1; j++)
+            for (int j = -1; j <= 1; j++)
             {
-                spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
+                spawnPosition = new Vector3(transform.position.x - (j * gridLength), transform.position.y - (i * gridLength), transform.position.z);
                 StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate));
             }
 
@@ -225,17 +251,22 @@ public class AsteroidSpawner : MonoBehaviour
     /// <param name="rate">Rate at which asteroids should be generated per second</param>
     /// <returns>yield return WaitForSeconds</returns>
     IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition, double rate)
-    { 
+    {
 
         var currentExpo = new Exponential(rate);
 
-        while(RunSpawner){
-            yield return new WaitForSeconds((float) currentExpo.Sample());
+        while (RunSpawner || bossBattle){
 
             //Verify that after waiting, we're still allowed to generate the asteroid
             if(RunSpawner)
             {
+                yield return new WaitForSeconds((float) currentExpo.Sample());
                 Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+            } else if (bossBattle)
+            {
+                int reduceInterval = 5;
+                yield return new WaitForSeconds((float) currentExpo.Sample() / reduceInterval);
+                Instantiate(bossBombsPrefabs[UnityEngine.Random.Range(0, bossBombsPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
             }
         }
 
@@ -249,7 +280,7 @@ public class AsteroidSpawner : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if(UpdateRate){
+        if(UpdateRate && !bossBattle){
             defaultRate += 0.025;
             InitDistros(defaultRate);
             UpdateRate = false;

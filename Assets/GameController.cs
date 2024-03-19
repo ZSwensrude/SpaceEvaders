@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
     float speedMultiplier = 1.2f;
 
     bool incrementScore = false;
+    bool bossActive = false;
 
     [SerializeField]
     float scoreMultiplier = 1;
@@ -100,9 +101,16 @@ public class GameController : MonoBehaviour
             stopsHit++;
             nextStopDistance = stopDistance * stopsHit;
 
-            // give player break before starting again
-            StartCoroutine("WaitBetweenStops");
-            
+            // boss battle every 2 stops 
+            if (stopsHit % 2 == 0 && !bossActive)
+            {
+                StartCoroutine("StartBossBattle");
+            } else
+            {
+                // give player break before starting again
+                StartCoroutine("WaitBetweenStops");
+            }
+
         }
 
         distanceText.text = ((int)distance).ToString() + "ly";
@@ -120,9 +128,25 @@ public class GameController : MonoBehaviour
             gameSettings.AsteroidsInGroup += 1; 
 
         yield return new WaitForSeconds(timeToWait);
+        
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
         spawner.UpdateRate = true;
+    }
+
+    private IEnumerator StartBossBattle()
+    {
+        gameSettings.AsteroidSpeed *= speedMultiplier;
+        gameSettings.AsteroidSpawnInterval /= speedMultiplier;
+        ScoreMultiplier *= speedMultiplier;
+        //50/50 chance to add another asteroid to max asteriods to spawn
+        if (Random.value < 0.5)
+            gameSettings.AsteroidsInGroup += 1;
+
+        yield return new WaitForSeconds(timeToWait);
+
+        Debug.Log("Boss time!!");
+        spawner.StartBossBattle();
     }
 
     private void IncrementScore()
