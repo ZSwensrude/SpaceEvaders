@@ -252,7 +252,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void Update()
     {
         if(UpdateRate){
-            defaultRate += 0.001;
+            defaultRate += 0.01;
             InitDistros(defaultRate);
             UpdateRate = false;
         }
