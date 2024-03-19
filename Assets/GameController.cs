@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField]
+    private VideoPlayer skybox;
+
     [SerializeField]
     AsteroidSpawner spawner;
 
@@ -69,6 +74,9 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        skybox.url = System.IO.Path.Combine(Application.streamingAssetsPath, "Animated_Gas_Planet.mp4");
+        skybox.Play();
+
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
 
@@ -152,7 +160,7 @@ public class GameController : MonoBehaviour
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
         //50/50 chance to add another asteroid to max asteriods to spawn
-        if(Random.value < 0.5)
+        if(UnityEngine.Random.value < 0.5)
             gameSettings.AsteroidsInGroup += 1; 
 
         yield return new WaitForSeconds(timeToWait);
