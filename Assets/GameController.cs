@@ -64,7 +64,8 @@ public class GameController : MonoBehaviour
     //at beginning of game, each position is equally as likely to generate an asteroid
     private float[] asteroidWeighting = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    private static double sigma = 1;
+    [SerializeField]
+    private double sigma = 1;
 
     // private float[] gaussArr = {(float)Normal.Gaussian2D(sigma, -1, -1),
     //                             (float)Normal.Gaussian2D(sigma, 0, -1),
@@ -191,7 +192,7 @@ public class GameController : MonoBehaviour
         x++; y++; y*=3;
 
         // add weight to current pos
-        asteroidWeighting[x + y]++;
+        asteroidWeighting[x + y] += frameWeight;
 
         yield return null;
     }
