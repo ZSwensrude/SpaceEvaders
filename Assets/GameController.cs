@@ -63,6 +63,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private AudioSource bossLoop;
 
+    [SerializeField]
+    private BossHandler bossHandler;
+
 
     private void Awake()
     {
@@ -138,12 +141,12 @@ public class GameController : MonoBehaviour
     {
         if (bossActive)
         {
-            bossShip.SetActive(false);
             spawner.StopBossBattle();
             bossActive = false;
             spawner.StopBossBattle();
             bossLoop.Stop();
             mainLoop.Play();
+            bossHandler.FlyAway();
         }
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
@@ -165,6 +168,7 @@ public class GameController : MonoBehaviour
         bossIntro.Play();
         Invoke("StartLoop", 15f);
         bossShip.SetActive(true);
+        bossHandler.FlyIn();
 
 
         gameSettings.AsteroidSpeed *= speedMultiplier;
