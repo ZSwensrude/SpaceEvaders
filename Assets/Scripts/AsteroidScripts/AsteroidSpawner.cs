@@ -159,14 +159,17 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
+    public void StopSpawning()
+    {
+        RunSpawner = false;
+        bossBattle = false;
+    }
+
     public void StartBossBattle()
     {
-        // stop normal spawning
-        RunSpawner = false;
+        bossBattle = true;
         StopCoroutine("StatisticalAsteroidGen");
         // start boss battle
-        bossBattle = true;
-
         InitDistros(defaultRate);
     }
 
@@ -257,7 +260,7 @@ public class AsteroidSpawner : MonoBehaviour
             if(RunSpawner)
             {
                 yield return new WaitForSeconds((float) currentExpo.Sample());
-                if(!bossBattle)
+                if(RunSpawner && !bossBattle)
                     Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
             } else if (bossBattle)
             {

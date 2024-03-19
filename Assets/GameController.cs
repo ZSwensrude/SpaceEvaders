@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour
         if (nextStopDistance <= 0)
         {
             gameSettings.IncrementScore = false;
-            spawner.RunSpawner = false;
+            spawner.StopSpawning();
             stopsHit++;
             // max out stop distance at 600 (anything else feels too long)
             if (stopsHit < 6)
@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour
             spawner.StopBossBattle();
             bossActive = false;
             spawner.StopBossBattle();
-            bossIntro.Stop();
+            bossLoop.Stop();
             mainLoop.Play();
         }
         gameSettings.AsteroidSpeed *= speedMultiplier;
@@ -163,6 +163,7 @@ public class GameController : MonoBehaviour
     {
         mainLoop.Stop();
         bossIntro.Play();
+        Invoke("StartLoop", 15f);
         bossShip.SetActive(true);
 
 
@@ -178,6 +179,12 @@ public class GameController : MonoBehaviour
         spawner.StartBossBattle();
         gameSettings.IncrementScore = true;
 
+    }
+
+    private void StartLoop()
+    {
+        bossIntro.Stop();
+        bossLoop.Play();
     }
 
     private void IncrementScore()
