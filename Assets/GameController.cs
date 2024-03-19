@@ -54,6 +54,16 @@ public class GameController : MonoBehaviour
     float scoreMultiplier = 1;
     public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
 
+    [SerializeField]
+    private GameObject bossShip;
+    [SerializeField]
+    private AudioSource mainLoop;
+    [SerializeField]
+    private AudioSource bossIntro;
+    [SerializeField]
+    private AudioSource bossLoop;
+
+
     private void Awake()
     {
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
@@ -68,6 +78,8 @@ public class GameController : MonoBehaviour
 
         // set initial stop distance
         nextStopDistance = stopDistance;
+
+        bossShip.SetActive(false);
 
         // make sure everything is running (might be false if stopped during a break)
         gameSettings.IncrementScore = true;
@@ -126,9 +138,12 @@ public class GameController : MonoBehaviour
     {
         if (bossActive)
         {
+            bossShip.SetActive(false);
             spawner.StopBossBattle();
             bossActive = false;
             spawner.StopBossBattle();
+            bossIntro.Stop();
+            mainLoop.Play();
         }
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
@@ -146,11 +161,17 @@ public class GameController : MonoBehaviour
 
     private IEnumerator StartBossBattle()
     {
+        mainLoop.Stop();
+        bossIntro.Play();
+        bossShip.SetActive(true);
+
+
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
 
-        yield return new WaitForSeconds(timeToWait);
+        float bossIntroTime = 3.5f;
+        yield return new WaitForSeconds(timeToWait + bossIntroTime);
 
         Debug.Log("Boss time!!");
         bossActive = true;
