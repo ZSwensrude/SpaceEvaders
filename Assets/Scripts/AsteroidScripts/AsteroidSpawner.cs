@@ -257,12 +257,14 @@ public class AsteroidSpawner : MonoBehaviour
             if(RunSpawner)
             {
                 yield return new WaitForSeconds((float) currentExpo.Sample());
-                Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+                if(!bossBattle)
+                    Instantiate(breakableAsteroidPrefabs[UnityEngine.Random.Range(0, breakableAsteroidPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
             } else if (bossBattle)
             {
                 int reduceInterval = 5;
                 yield return new WaitForSeconds((float) currentExpo.Sample() / reduceInterval);
-                Instantiate(bossBombsPrefabs[UnityEngine.Random.Range(0, bossBombsPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
+                if (bossBattle)
+                    Instantiate(bossBombsPrefabs[UnityEngine.Random.Range(0, bossBombsPrefabs.Count)], spawnPosition, Random.rotation).GetComponent<Asteroid>();
             }
         }
 
