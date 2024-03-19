@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
 
     float distance = 0;
     float nextStopDistance = 0;
+    float maxStopDistance = 600;
     // default distance to next stop
     readonly int stopDistance = 100;
     int stopsHit = 1;
@@ -99,8 +100,11 @@ public class GameController : MonoBehaviour
             gameSettings.IncrementScore = false;
             spawner.RunSpawner = false;
             stopsHit++;
-            nextStopDistance = stopDistance * stopsHit;
-
+            // max out stop distance at 600 (anything else feels too long)
+            if (stopsHit < 6)
+                nextStopDistance = stopDistance * stopsHit;
+            else
+                nextStopDistance = maxStopDistance;
             // boss battle every 2 stops 
             if (stopsHit % 2 == 0 && !bossActive)
             {
@@ -120,6 +124,12 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitBetweenStops ()
     {
+        if (bossActive)
+        {
+            spawner.StopBossBattle();
+            bossActive = false;
+            spawner.StopBossBattle();
+        }
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
@@ -139,14 +149,14 @@ public class GameController : MonoBehaviour
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
-        //50/50 chance to add another asteroid to max asteriods to spawn
-        if (Random.value < 0.5)
-            gameSettings.AsteroidsInGroup += 1;
 
         yield return new WaitForSeconds(timeToWait);
 
         Debug.Log("Boss time!!");
+        bossActive = true;
         spawner.StartBossBattle();
+        gameSettings.IncrementScore = true;
+
     }
 
     private void IncrementScore()

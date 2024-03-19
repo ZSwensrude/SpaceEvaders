@@ -172,10 +172,6 @@ public class AsteroidSpawner : MonoBehaviour
 
     public void StopBossBattle()
     {
-        // stop normal spawning
-        RunSpawner = true;
-        // set up new values for boss
-        InitDistros(defaultRate);
         // start boss battle
         bossBattle = false;
     }
