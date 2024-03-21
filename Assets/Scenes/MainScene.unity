@@ -1297,7 +1297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: sigma
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: Player
@@ -1313,7 +1313,7 @@ PrefabInstance:
       objectReference: {fileID: 297835667}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: frameWeight
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2847303539917809142, guid: 96013c20adc7db54a8b89739e70b7e85, type: 3}
       propertyPath: DistanceObject

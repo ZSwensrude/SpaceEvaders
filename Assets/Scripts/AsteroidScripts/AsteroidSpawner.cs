@@ -211,8 +211,10 @@ public class AsteroidSpawner : MonoBehaviour
         {
             for (int j=-1; j<=1; j++)
             {
+                Debug.Log("weights = " + weights[i+1 + (j+1)*3]);
                 spawnPosition = new Vector3(transform.position.x - (j * gridLength ), transform.position.y - (i * gridLength), transform.position.z);
                 StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate*weights[i+1 + (j+1)*3]));
+                StartCoroutine(StatisticalAsteroidGen(spawnPosition, rate));
             }
 
         }
@@ -228,6 +230,8 @@ public class AsteroidSpawner : MonoBehaviour
     /// <returns>yield return WaitForSeconds</returns>
     IEnumerator StatisticalAsteroidGen(Vector3 spawnPosition, double rate)
     { 
+
+        Debug.Log("yo");
 
         var currentExpo = new Exponential(rate);
 
@@ -252,7 +256,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void Update()
     {
         if(UpdateRate){
-            defaultRate += 0.01;
+            defaultRate *= 2;
             InitDistros(defaultRate);
             UpdateRate = false;
         }

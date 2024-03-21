@@ -207,7 +207,14 @@ public class GameController : MonoBehaviour
         for (int i=0; i < asteroidWeighting.Length; i++) 
         {
             muX += ((i%3)-1)*asteroidWeighting[i];
-            muY += (i-1)%3*asteroidWeighting[i];
+            if (i < 3)
+            {
+                muY += -1*asteroidWeighting[i];
+            }
+            if (i >= 6)
+            {
+                muY += asteroidWeighting[i];
+            }
         }
 
         for (int i=0; i < result.Length; i++)
