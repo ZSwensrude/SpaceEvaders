@@ -99,6 +99,7 @@ public class AsteroidSpawner : MonoBehaviour
 
     IEnumerator TutorialSpawn ()
     {
+        yield return new WaitForSeconds(1);
         // send one asteroid out in the middle of the screen
         int[] locations = new int[9] { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
         SpawnAsteroids(locations);
