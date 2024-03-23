@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject NextStopObject;
     TextMeshProUGUI nextStopText;
+    [SerializeField]
+    GameObject Tutorial;
 
     [SerializeField]
     GameSettings gameSettings;
@@ -89,6 +91,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        StartCoroutine("TutorialText");
+
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
 
@@ -144,6 +148,40 @@ public class GameController : MonoBehaviour
         distanceText.text = ((int)distance).ToString() + "ly";
         nextStopText.text = ((int)nextStopDistance).ToString() + "ly";
 
+    }
+    
+    private IEnumerator TutorialText()
+    {
+
+        StartCoroutine("TutorialFadeIn");
+        yield return new WaitForSeconds(5);
+        StartCoroutine("TutorialFadeOut");
+
+        yield return null;
+    }
+
+    private IEnumerator TutorialFadeIn()
+    {
+        while(Tutorial.GetComponent<CanvasGroup>().alpha != 1)
+        {            
+            Tutorial.GetComponent<CanvasGroup>().alpha += 0.5f*Time.deltaTime;
+            yield return new WaitForSeconds(0.001f);
+
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator TutorialFadeOut()
+    {
+
+        while(Tutorial.GetComponent<CanvasGroup>().alpha != 0)
+        {
+            Tutorial.GetComponent<CanvasGroup>().alpha -= 0.5f*Time.deltaTime;
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        yield return null;
     }
 
     private IEnumerator WaitBetweenStops ()
