@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -13,11 +12,17 @@ public class Leaderboard : MonoBehaviour
 
     private string publicKey = "5b8d74935d7d1699bb6d601d9bef889f0d758e97b7832fdcc5ba25585bfe2841";
 
+    private void Start()
+    {
+        GetLeaderboard();
+    }
+
     public void GetLeaderboard()
     {
         LeaderboardCreator.GetLeaderboard(publicKey, ((msg) =>
         {
-            for (int i = 0; i < names.Count; i++)
+            int loopLength = (msg.Length < names.Count) ? msg.Length : names.Count;
+            for (int i = 0; i < loopLength; i++)
             {
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
