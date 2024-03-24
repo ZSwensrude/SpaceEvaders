@@ -32,9 +32,12 @@ public class Leaderboard : MonoBehaviour
 
     public void SetLeaderboardEntry(string username, int score)
     {
-        LeaderboardCreator.UploadNewEntry(publicKey, username, score, ((msg) =>
+        if(username.Length > 0 && score > 0)
         {
-            GetLeaderboard();
-        }));
+            LeaderboardCreator.UploadNewEntry(publicKey, username, score, ((msg) =>
+            {
+                GetLeaderboard();
+            }));
+        }
     }
 }
