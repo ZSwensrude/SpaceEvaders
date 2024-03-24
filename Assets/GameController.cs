@@ -6,10 +6,14 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Accord.Math;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField]
+    private VideoPlayer skybox;
+
     [SerializeField]
     AsteroidSpawner spawner;
 
@@ -50,6 +54,7 @@ public class GameController : MonoBehaviour
 
     float distance = 0;
     float nextStopDistance = 0;
+    float maxStopDistance = 600;
     // default distance to next stop
     readonly int stopDistance = 100;
     int stopsHit = 1;
@@ -58,10 +63,23 @@ public class GameController : MonoBehaviour
     float speedMultiplier = 1.2f;
 
     bool incrementScore = false;
+    bool bossActive = false;
 
     [SerializeField]
     float scoreMultiplier = 1;
     public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
+
+    [SerializeField]
+    private GameObject bossShip;
+    [SerializeField]
+    private AudioSource mainLoop;
+    [SerializeField]
+    private AudioSource bossIntro;
+    [SerializeField]
+    private AudioSource bossLoop;
+
+    [SerializeField]
+    private BossHandler bossHandler;
 
     //at beginning of game, each position is equally as likely to generate an asteroid
     private float[] asteroidWeighting = {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -91,6 +109,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        skybox.url = System.IO.Path.Combine(Application.streamingAssetsPath, "Animated_Gas_Planet.mp4");
+        skybox.Play();
         StartCoroutine("TutorialText");
 
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
@@ -105,6 +125,8 @@ public class GameController : MonoBehaviour
 
         // set initial stop distance
         nextStopDistance = stopDistance;
+
+        bossShip.SetActive(false);
 
         // make sure everything is running (might be false if stopped during a break)
         gameSettings.IncrementScore = true;
@@ -136,13 +158,23 @@ public class GameController : MonoBehaviour
         if (nextStopDistance <= 0)
         {
             gameSettings.IncrementScore = false;
-            spawner.RunSpawner = false;
+            spawner.StopSpawning();
             stopsHit++;
-            nextStopDistance = stopDistance * stopsHit;
+            // max out stop distance at 600 (anything else feels too long)
+            if (stopsHit < 6)
+                nextStopDistance = stopDistance * stopsHit;
+            else
+                nextStopDistance = maxStopDistance;
+            // boss battle every 3 stops 
+            if (stopsHit % 3 == 0 && !bossActive)
+            {
+                StartCoroutine("StartBossBattle");
+            } else
+            {
+                // give player break before starting again
+                StartCoroutine("WaitBetweenStops");
+            }
 
-            // give player break before starting again
-            StartCoroutine("WaitBetweenStops");
-            
         }
 
         distanceText.text = ((int)distance).ToString() + "ly";
@@ -186,6 +218,15 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitBetweenStops ()
     {
+        if (bossActive)
+        {
+            spawner.StopBossBattle();
+            bossActive = false;
+            spawner.StopBossBattle();
+            bossLoop.Stop();
+            mainLoop.Play();
+            bossHandler.FlyAway();
+        }
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
@@ -195,9 +236,39 @@ public class GameController : MonoBehaviour
         
         StartCoroutine("UpdateWeights");
         yield return new WaitForSeconds(timeToWait);
+        
         gameSettings.IncrementScore = true;
         spawner.RunSpawner = true;
         spawner.UpdateRate = true;
+    }
+
+    private IEnumerator StartBossBattle()
+    {
+        mainLoop.Stop();
+        bossIntro.Play();
+        Invoke("StartLoop", 15f);
+        bossShip.SetActive(true);
+        bossHandler.FlyIn();
+
+
+        gameSettings.AsteroidSpeed *= speedMultiplier;
+        gameSettings.AsteroidSpawnInterval /= speedMultiplier;
+        ScoreMultiplier *= speedMultiplier;
+
+        float bossIntroTime = 3.5f;
+        yield return new WaitForSeconds(timeToWait + bossIntroTime);
+
+        Debug.Log("Boss time!!");
+        bossActive = true;
+        spawner.StartBossBattle();
+        gameSettings.IncrementScore = true;
+
+    }
+
+    private void StartLoop()
+    {
+        bossIntro.Stop();
+        bossLoop.Play();
     }
 
     private void IncrementScore()
