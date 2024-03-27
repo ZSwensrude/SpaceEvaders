@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using MathNet.Numerics.Distributions;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
