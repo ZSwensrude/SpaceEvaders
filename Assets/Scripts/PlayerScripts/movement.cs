@@ -17,6 +17,9 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private GameSettings gameSettings;
 
+    [SerializeField]
+    private bool tutorial;
+
     //Controls movement distance
     public float moveDistance;
     //Controls speed during movement. Used for smoothing
@@ -185,21 +188,27 @@ public class Movement : MonoBehaviour
         if (boost.WasPressedThisFrame() && boostPercent > 0)
         {
             isBoosting = true;
-            gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
-            gameSettings.AsteroidSpawnInterval /= gameSettings.BoostSpeed;
+            if (!tutorial)
+            {
+                gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
+                gameSettings.AsteroidSpawnInterval /= gameSettings.BoostSpeed;
+                controller.ScoreMultiplier *= 2;
+            }
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
-            controller.ScoreMultiplier *= 2;
             boostSound.Play();
         }
         else if ((boost.WasReleasedThisFrame() || boostPercent <= 0) && isBoosting)
         {
             isBoosting = false;
-            gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
-            gameSettings.AsteroidSpawnInterval *= gameSettings.BoostSpeed;
+            if (!tutorial)
+            {
+                gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
+                gameSettings.AsteroidSpawnInterval *= gameSettings.BoostSpeed;
+                controller.ScoreMultiplier /= 2;
+            }
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
-            controller.ScoreMultiplier /= 2;
             boostSound.Stop();
         }
 
