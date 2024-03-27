@@ -160,7 +160,7 @@ public class GameController : MonoBehaviour
         distance += pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
         nextStopDistance -= pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
 
-        if (nextStopDistance <= 0 && !tutorial)
+        if (nextStopDistance <= 0)
         {
             gameSettings.IncrementScore = false;
             spawner.StopSpawning();
@@ -171,7 +171,7 @@ public class GameController : MonoBehaviour
             else
                 nextStopDistance = maxStopDistance;
             // boss battle every 3 stops 
-            if (stopsHit % 3 == 0 && !bossActive)
+            if (stopsHit % 3 == 0 && !bossActive && !tutorial)
             {
                 StartCoroutine("StartBossBattle");
             } else
