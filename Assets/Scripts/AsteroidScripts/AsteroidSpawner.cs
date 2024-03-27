@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MathNet.Numerics.Distributions;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
@@ -142,10 +143,10 @@ public class AsteroidSpawner : MonoBehaviour
             spawnInterval = tutorial ? 5 : gameSettings.AsteroidSpawnInterval;
             
             // spawn random amount of asteroids between 5 and AsteroidsInGroup + 1 (exclusive)
-            numToSpawn = tutorial ? 2 : Random.Range(5, gameSettings.AsteroidsInGroup + 1);
+            numToSpawn = tutorial ? 1 : Random.Range(5, gameSettings.AsteroidsInGroup + 1);
 
 
-            if (RunSpawner)
+            if (RunSpawner && !tutorial)
             {
                 //int[] locations = GetAsteroids(numToSpawn);
                 int[] locations = GetAsteroids(numToSpawn);
@@ -163,6 +164,10 @@ public class AsteroidSpawner : MonoBehaviour
 
                 // spawn asteroids
                 SpawnAsteroids(locations);
+            } else if (tutorial)
+            {
+                int[] tutLoc = new int[9] { 0, 0, 0, Random.Range(1, 3), 0, 0, 0, 0, 0 };
+                SpawnAsteroids(tutLoc);
             }
 
             // increase speed of next asteroids (proof that we can change the speed while playing)
