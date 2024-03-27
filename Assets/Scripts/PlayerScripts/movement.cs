@@ -190,7 +190,8 @@ public class Movement : MonoBehaviour
             isBoosting = true;
             gameSettings.AsteroidSpeed *= gameSettings.BoostSpeed;
             gameSettings.AsteroidSpawnInterval /= gameSettings.BoostSpeed;
-            controller.ScoreMultiplier *= 2;
+            controller.ScoreMultiplier *= 2.5f;
+            controller.DistanceMultiplier *= 2;
             starTrails.enabled = true;
             starSpeed.simulationSpeed *= starSpeed.simulationSpeed * gameSettings.BoostSpeed;
             boostSound.Play();
@@ -200,7 +201,8 @@ public class Movement : MonoBehaviour
             isBoosting = false;
             gameSettings.AsteroidSpeed /= gameSettings.BoostSpeed;
             gameSettings.AsteroidSpawnInterval *= gameSettings.BoostSpeed;
-            controller.ScoreMultiplier /= 2;
+            controller.ScoreMultiplier /= 2.5f;
+            controller.DistanceMultiplier /= 2;
             starTrails.enabled = false;
             starSpeed.simulationSpeed = defaultStarSpeed;
             boostSound.Stop();
