@@ -73,6 +73,10 @@ public class GameController : MonoBehaviour
     public float ScoreMultiplier { get => scoreMultiplier; set => scoreMultiplier = value; }
 
     [SerializeField]
+    float distanceMultiplier = 1;
+    public float DistanceMultiplier { get => distanceMultiplier; set => distanceMultiplier = value; }
+
+    [SerializeField]
     private GameObject bossShip;
     [SerializeField]
     private AudioSource mainLoop;
@@ -157,8 +161,8 @@ public class GameController : MonoBehaviour
 
     private void IncrementDistance()
     {
-        distance += pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
-        nextStopDistance -= pointsPerSecond * ScoreMultiplier * Time.deltaTime / 10;
+        distance += pointsPerSecond * DistanceMultiplier * Time.deltaTime / 10;
+        nextStopDistance -= pointsPerSecond * DistanceMultiplier * Time.deltaTime / 10;
 
         if (nextStopDistance <= 0)
         {
@@ -237,8 +241,9 @@ public class GameController : MonoBehaviour
         gameSettings.AsteroidSpeed *= speedMultiplier;
         gameSettings.AsteroidSpawnInterval /= speedMultiplier;
         ScoreMultiplier *= speedMultiplier;
+        DistanceMultiplier *= speedMultiplier;
         //50/50 chance to add another asteroid to max asteriods to spawn
-        if(UnityEngine.Random.value < 0.5)
+        if (UnityEngine.Random.value < 0.5)
             gameSettings.AsteroidsInGroup += 1; 
         
         StartCoroutine("UpdateWeights");
@@ -256,11 +261,6 @@ public class GameController : MonoBehaviour
         Invoke("StartLoop", 15f);
         bossShip.SetActive(true);
         bossHandler.FlyIn();
-
-
-        gameSettings.AsteroidSpeed *= speedMultiplier;
-        gameSettings.AsteroidSpawnInterval /= speedMultiplier;
-        ScoreMultiplier *= speedMultiplier;
 
         float bossIntroTime = 3.5f;
         yield return new WaitForSeconds(timeToWait + bossIntroTime);
