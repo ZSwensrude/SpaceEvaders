@@ -114,6 +114,11 @@ public class GameController : MonoBehaviour
                                         (0, 1),
                                         (1, 1)};
 
+    public void BreakAsteroid()
+    {
+        score += 50 * ScoreMultiplier;
+    }
+
     private void Awake()
     {
         skybox.url = System.IO.Path.Combine(Application.streamingAssetsPath, "Animated_Gas_Planet.mp4");
