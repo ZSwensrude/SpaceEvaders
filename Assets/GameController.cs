@@ -48,6 +48,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private float frameWeight;
 
+    [SerializeField]
+    private bool tutorial;
+
     float score = 0;
     int highScore = 0;
     float pointsPerSecond = 0;
@@ -111,13 +114,15 @@ public class GameController : MonoBehaviour
     {
         skybox.url = System.IO.Path.Combine(Application.streamingAssetsPath, "Animated_Gas_Planet.mp4");
         skybox.Play();
-        StartCoroutine("TutorialText");
+        if(!tutorial)
+            StartCoroutine("TutorialText");
 
         scoreText = ScoreObject.GetComponent<TextMeshProUGUI>();
         scoreMultiplierText = ScoreMultiplierObject.GetComponent<TextMeshProUGUI>();
 
         highscoreText = HighScoreObject.GetComponent<TextMeshProUGUI>();
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if(!tutorial)
+            highScore = PlayerPrefs.GetInt("HighScore", 0);
         highscoreText.text = highScore.ToString();
 
         distanceText = DistanceObject.GetComponent<TextMeshProUGUI>();
@@ -166,7 +171,7 @@ public class GameController : MonoBehaviour
             else
                 nextStopDistance = maxStopDistance;
             // boss battle every 3 stops 
-            if (stopsHit % 3 == 0 && !bossActive)
+            if (stopsHit % 3 == 0 && !bossActive && !tutorial)
             {
                 StartCoroutine("StartBossBattle");
             } else
@@ -184,10 +189,12 @@ public class GameController : MonoBehaviour
     
     private IEnumerator TutorialText()
     {
-
-        StartCoroutine("TutorialFadeIn");
-        yield return new WaitForSeconds(5);
-        StartCoroutine("TutorialFadeOut");
+        if (!tutorial)
+        {
+            StartCoroutine("TutorialFadeIn");
+            yield return new WaitForSeconds(5);
+            StartCoroutine("TutorialFadeOut");
+        }
 
         yield return null;
     }
@@ -280,7 +287,7 @@ public class GameController : MonoBehaviour
         scoreMultiplierText.text = "x" + scoreMultiplier.ToString("F1");
 
         // if new highscore
-        if (score > highScore)
+        if (score > highScore && !tutorial)
         {
             highScore = (int)score;
             highscoreText.text = highScore.ToString();

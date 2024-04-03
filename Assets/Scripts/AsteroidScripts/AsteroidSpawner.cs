@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MathNet.Numerics.Distributions;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
@@ -32,6 +33,9 @@ public class AsteroidSpawner : MonoBehaviour
 
     private bool runSpawner = true;
 
+    [SerializeField]
+    private bool tutorial;
+
     private float breakableChance = 0.10f;
 
     private bool bossBattle = false;
@@ -51,6 +55,7 @@ public class AsteroidSpawner : MonoBehaviour
     public bool  UpdateRate { get => updateRate; set => updateRate = value; }
     private float[] weights = {1,1,1,1,1,1,1,1,1};
     public float[] UpdateWeights { set => weights = value; }
+
     private void Awake()
     {
         printLogs = gameSettings.PrintLogs;
@@ -70,6 +75,8 @@ public class AsteroidSpawner : MonoBehaviour
         // turn off spawner at start to do tutorial
         RunSpawner = false;
         StartCoroutine(SpawnLoop());
+        if (tutorial)
+            breakableChance = 0.5f;
     }
 
 
@@ -104,20 +111,24 @@ public class AsteroidSpawner : MonoBehaviour
 
     IEnumerator TutorialSpawn()
     {
-        yield return new WaitForSeconds(1);
-        // send one asteroid out in the middle of the screen
-        int[] locations = new int[9] { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-        SpawnAsteroids(locations);
-        // give them some time
-        yield return new WaitForSeconds(3);
+        if (!tutorial)
+        {
+            yield return new WaitForSeconds(1);
+            // send one asteroid out in the middle of the screen
+            int[] locations = new int[9] { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+            SpawnAsteroids(locations);
+            // give them some time
+            yield return new WaitForSeconds(3);
 
-        // spawn a full layer of breakable asteroids
-        locations = new int[9] { 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-        SpawnAsteroids(locations);
+            // spawn a full layer of breakable asteroids
+            locations = new int[9] { 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+            SpawnAsteroids(locations);
 
+        }
         yield return new WaitForSeconds(3);
+        if (!tutorial)
+            UpdateRate = true;
         RunSpawner = true;
-        UpdateRate = true;
     }
 
 
@@ -128,13 +139,14 @@ public class AsteroidSpawner : MonoBehaviour
         while (true)
         {
             // get values from scriptable object
-            asteroidSpeed = gameSettings.AsteroidSpeed;
-            spawnInterval = gameSettings.AsteroidSpawnInterval;
+            asteroidSpeed = tutorial ? 0.2f : gameSettings.AsteroidSpeed;
+            spawnInterval = tutorial ? 5 : gameSettings.AsteroidSpawnInterval;
+            
             // spawn random amount of asteroids between 5 and AsteroidsInGroup + 1 (exclusive)
-            numToSpawn = Random.Range(5, gameSettings.AsteroidsInGroup + 1);
+            numToSpawn = tutorial ? 1 : Random.Range(5, gameSettings.AsteroidsInGroup + 1);
 
 
-            if (RunSpawner)
+            if (RunSpawner && !tutorial)
             {
                 //int[] locations = GetAsteroids(numToSpawn);
                 int[] locations = GetAsteroids(numToSpawn);
@@ -152,6 +164,10 @@ public class AsteroidSpawner : MonoBehaviour
 
                 // spawn asteroids
                 SpawnAsteroids(locations);
+            } else if (tutorial)
+            {
+                int[] tutLoc = new int[9] { 0, 0, 0, Random.Range(1, 3), 0, 0, 0, 0, 0 };
+                SpawnAsteroids(tutLoc);
             }
 
             // increase speed of next asteroids (proof that we can change the speed while playing)
